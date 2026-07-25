@@ -1,0 +1,48 @@
+export const events = [
+  {
+    id: 1,
+    title: 'International Physiotherapy Innovation Summit 2026',
+    description: 'Join 500+ physiotherapy professionals for 3 days of cutting-edge research presentations, hands-on workshops, and networking opportunities.',
+    month: 'AUG',
+    day: '15',
+    year: '2026',
+    tag: 'Conference',
+    featured: true,
+    details: [
+      { icon: 'fas fa-map-marker-alt', text: 'Dhaka International Convention Center' },
+      { icon: 'fas fa-users', text: '500+ Attendees' },
+    ],
+    btnText: 'Register Now',
+    btnClass: 'btn btn-primary btn-sm',
+  },
+  {
+    id: 2,
+    title: 'Advanced Dry Needling Workshop',
+    description: 'Intensive 2-day hands-on workshop on myofascial trigger point dry needling techniques.',
+    month: 'SEP',
+    day: '05',
+    year: null,
+    tag: 'Workshop',
+    featured: false,
+    details: [
+      { icon: 'fas fa-map-marker-alt', text: 'BAHIR Campus, Dhaka' },
+    ],
+    btnText: 'Learn More',
+    btnClass: 'btn btn-outline btn-sm',
+  },
+  {
+    id: 3,
+    title: 'AI in Rehabilitation: Future of Physiotherapy',
+    description: 'Free online webinar exploring AI-powered assessment tools and virtual rehabilitation technologies.',
+    month: 'OCT',
+    day: '20',
+    year: null,
+    tag: 'Webinar',
+    featured: false,
+    details: [
+      { icon: 'fas fa-video', text: 'Online (Zoom)' },
+    ],
+    btnText: 'Register Free',
+    btnClass: 'btn btn-outline btn-sm',
+  },
+];

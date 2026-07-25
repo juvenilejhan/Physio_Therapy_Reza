@@ -1,0 +1,17 @@
+/* App-level layout styles */
+
+/* Page transitions */
+main {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Page wrapper provides spacing for fixed navbar */
+.page-wrapper {
+  padding-top: 120px;
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding-top: 100px;
+  }
+}

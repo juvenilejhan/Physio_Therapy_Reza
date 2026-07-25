@@ -1,0 +1,73 @@
+:root {
+  /* Core Colors - Default Dark Mode (Deep Navy & Slate) */
+  --dark-navy: #0a192f;
+  --dark-surface: #112240;
+  --dark-card: #233554;
+  --dark-card-hover: #2d4266;
+  
+  /* Retaining variable names for compatibility, but updating hues to Modern Medical Tech (Blue/Teal/Cyan) */
+  --primary-maroon: #0284c7; /* Ocean Blue */
+  --primary-green: #0d9488;  /* Clinical Teal */
+  --accent-gold: #38bdf8;    /* Bright Sky Blue (Accent) */
+  --accent-gold-light: #7dd3fc;
+  --accent-gold-dark: #0284c7;
+  
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  /* Border & UI Elements */
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(56, 189, 248, 0.3); /* Match new accent */
+
+  /* Light Theme Overrides */
+  &[data-theme="light"] {
+    --dark-navy: #f8fafc;
+    --dark-surface: #f1f5f9;
+    --dark-card: #ffffff;
+    --dark-card-hover: #f1f5f9;
+    /* Darker variants for readability in light mode */
+    --primary-maroon: #0369a1; 
+    --primary-green: #0f766e;
+    --accent-gold: #0284c7; 
+    
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    
+    --border-light: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(2, 132, 199, 0.4);
+    
+    /* Ensure hero section text stays legible if the background image is dark */
+    --hero-overlay: rgba(255, 255, 255, 0.85);
+  }
+  
+  /* Border & Gradients */
+  --glass-bg: rgba(0, 184, 175, 0.7);
+  --glass-border: rgba(201, 168, 76, 0.2);
+  --gradient-gold: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+  --gradient-maroon: linear-gradient(135deg, var(--primary-maroon), #983861);
+  --gradient-primary: linear-gradient(135deg, var(--primary-maroon), var(--dark-navy));
+  --gradient-gold-text: linear-gradient(90deg, #E0C878, var(--accent-gold), #A1853B);
+  
+  /* Typography */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  
+  /* Effects */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  --shadow-gold: 0 0 20px rgba(201, 168, 76, 0.2);
+  --shadow-gold-strong: 0 0 30px rgba(201, 168, 76, 0.4);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Layout */
+  --container-max: 1280px;
+  --section-padding: 6rem 0;
+}
