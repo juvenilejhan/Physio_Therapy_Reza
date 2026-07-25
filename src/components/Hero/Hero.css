@@ -54,10 +54,10 @@
 .hero-badge {
   display: inline-block;
   padding: 0.5rem 1.25rem;
-  background: hsla(177, 100%, 36%, 0.151);
+  background: var(--gradient-gold);
   border: 1px solid var(--border-color);
   border-radius: 50px;
-  color: var(--accent-gold);
+  color: white;
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
