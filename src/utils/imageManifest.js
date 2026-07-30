@@ -7,5 +7,20 @@
  */
 
 export const imageManifest = {
-  /* no images processed yet */
+  'courses/cardiopulmonary': [400, 800],
+  'courses/manual-therapy': [400, 800],
+  'courses/musculoskeletal': [400, 800],
+  'courses/neurological': [400, 800],
+  'courses/pediatric': [400, 800],
+  'courses/sports-injury': [400, 800],
+  'events/ai-webinar': [400, 800],
+  'events/dry-needling': [400, 800],
+  'events/summit': [400, 800],
+  'facilities/community': [400, 800, 1200],
+  'facilities/research-lab': [400, 800, 1200],
+  'facilities/training': [400, 800, 1200],
+  'hero/hero': [1600, 2400],
+  'news/award': [400, 800],
+  'news/partnership': [400, 800],
+  'news/spinal-study': [400, 800],
 };

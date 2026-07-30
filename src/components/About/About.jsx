@@ -31,6 +31,7 @@ const IMAGE_CARDS = [
   {
     icon: 'fas fa-hands-helping',
     label: 'Hands-on Training',
+    image: 'facilities/training',
     gradient: gradients.maroon,
     wide: true,
     ratio: '16 / 9',
@@ -39,15 +40,17 @@ const IMAGE_CARDS = [
   {
     icon: 'fas fa-microscope',
     label: 'Research Labs',
+    image: 'facilities/research-lab',
     gradient: gradients.laurel,
-    ratio: '4 / 3',
+    ratio: '16 / 9',
     sizes: '(max-width: 768px) 50vw, 290px',
   },
   {
     icon: 'fas fa-users',
     label: 'Global Community',
+    image: 'facilities/community',
     gradient: gradients.bronze,
-    ratio: '4 / 3',
+    ratio: '16 / 9',
     sizes: '(max-width: 768px) 50vw, 290px',
   },
 ];

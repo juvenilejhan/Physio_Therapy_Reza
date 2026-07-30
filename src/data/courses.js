@@ -29,7 +29,7 @@ export const courses = [
     badge: 'Popular',
     badgeType: '',
     icon: 'fas fa-bone',
-    image: 'courses/testcourse',
+    image: 'courses/musculoskeletal',
     gradient: gradients.maroon,
   },
   {
@@ -44,6 +44,7 @@ export const courses = [
     badge: 'New',
     badgeType: 'new',
     icon: 'fas fa-brain',
+    image: 'courses/neurological',
     gradient: gradients.laurel,
   },
   {
@@ -58,6 +59,7 @@ export const courses = [
     badge: null,
     badgeType: '',
     icon: 'fas fa-running',
+    image: 'courses/sports-injury',
     gradient: gradients.bronze,
   },
   {
@@ -72,6 +74,7 @@ export const courses = [
     badge: null,
     badgeType: '',
     icon: 'fas fa-hand-holding-medical',
+    image: 'courses/manual-therapy',
     gradient: gradients.claret,
   },
   {
@@ -86,6 +89,7 @@ export const courses = [
     badge: null,
     badgeType: '',
     icon: 'fas fa-heartbeat',
+    image: 'courses/cardiopulmonary',
     gradient: gradients.forest,
   },
   {
@@ -100,6 +104,7 @@ export const courses = [
     badge: 'Coming Soon',
     badgeType: 'coming',
     icon: 'fas fa-child',
+    image: 'courses/pediatric',
     gradient: gradients.ember,
   },
 ];

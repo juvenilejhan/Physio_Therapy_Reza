@@ -25,6 +25,7 @@ export const news = [
     datetime: '2026-07-20',
     category: 'Research',
     icon: 'fas fa-newspaper',
+    image: 'news/spinal-study',
     gradient: gradients.laurel,
   },
   {
@@ -35,6 +36,7 @@ export const news = [
     datetime: '2026-07-12',
     category: 'Partnership',
     icon: 'fas fa-handshake',
+    image: 'news/partnership',
     gradient: gradients.maroon,
   },
   {
@@ -45,6 +47,7 @@ export const news = [
     datetime: '2026-06-28',
     category: 'Achievement',
     icon: 'fas fa-trophy',
+    image: 'news/award',
     gradient: gradients.forest,
   },
 ];
