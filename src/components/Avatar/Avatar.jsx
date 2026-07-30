@@ -21,6 +21,7 @@ import './Avatar.css';
 export default function Avatar({
   image,
   initials,
+  icon,
   gradient,
   size = 128,
   className = '',
@@ -51,8 +52,14 @@ export default function Avatar({
           decoding="async"
           onError={() => setFailed(true)}
         />
-      ) : (
+      ) : initials ? (
         <span className="avatar-initials">{initials}</span>
+      ) : (
+        /* No photograph and no initials — an open position rather than a
+           person. Initials would imply a name that doesn't exist. */
+        <span className="avatar-icon">
+          <i className={icon ?? 'fas fa-user-plus'}></i>
+        </span>
       )}
     </div>
   );

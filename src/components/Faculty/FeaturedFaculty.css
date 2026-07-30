@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Featured lead profile
+
+   Brand furniture per the two-palette rule: maroon surface and gold accents,
+   not the interface blue. The only blue here is the button, which is an
+   interactive element.
+   ========================================================================== */
+.featured-faculty {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  padding: 2.5rem;
+  margin-bottom: 3.5rem;
+  background: var(--dark-card);
+  border: 1px solid var(--brand-border);
+  border-left: 4px solid var(--brand-gold);
+  border-radius: 18px;
+  box-shadow: var(--shadow-md);
+}
+
+.featured-faculty-media {
+  position: relative;
+}
+
+/* Square, not circular — a circle clips a formal headshot badly at this size. */
+.featured-faculty-photo,
+.featured-faculty-fallback {
+  width: 220px;
+  height: 220px;
+  border-radius: 14px;
+  object-fit: cover;
+  /* faces sit above centre in a head-and-shoulders frame */
+  object-position: 50% 38%;
+  display: block;
+  border: 2px solid var(--brand-gold);
+  box-shadow: var(--shadow-sm);
+}
+
+.featured-faculty-fallback {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.featured-faculty-tag {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  margin-bottom: 0.85rem;
+  border-radius: 50px;
+  background: var(--brand-wash);
+  border: 1px solid var(--brand-border);
+  color: var(--brand-gold-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.featured-faculty-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.featured-faculty-appointment {
+  color: var(--text-secondary);
+  font-size: 0.975rem;
+  line-height: 1.55;
+  margin: 0 0 0.35rem;
+}
+
+.featured-faculty-former {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0 0 1.5rem;
+}
+
+.featured-faculty-subhead {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-gold-text);
+  margin: 0 0 0.85rem;
+}
+
+.featured-faculty-credentials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.6rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem;
+}
+
+.featured-faculty-credentials li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--text-secondary);
+  font-size: 0.925rem;
+  line-height: 1.5;
+}
+
+.featured-faculty-credentials i {
+  color: var(--brand-gold-text);
+  font-size: 0.75rem;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.featured-faculty-bio {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 1.75rem;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 768px) {
+  .featured-faculty {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    padding: 1.75rem;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .featured-faculty-photo,
+  .featured-faculty-fallback {
+    width: 180px;
+    height: 180px;
+  }
+
+  .featured-faculty-credentials {
+    grid-template-columns: minmax(0, 1fr);
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-faculty {
+    padding: 1.35rem;
+    border-radius: 14px;
+  }
+
+  .featured-faculty-photo,
+  .featured-faculty-fallback {
+    width: 150px;
+    height: 150px;
+  }
+}

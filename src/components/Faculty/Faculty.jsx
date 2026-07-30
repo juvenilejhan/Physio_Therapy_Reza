@@ -1,12 +1,35 @@
 import { Link } from 'react-router-dom';
-import { faculty } from '../../data/faculty';
+import { leadFaculty, otherFaculty } from '../../data/faculty';
 import Avatar from '../Avatar/Avatar';
+import FeaturedFaculty from './FeaturedFaculty';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import Reveal from '../Reveal/Reveal';
 import './Faculty.css';
 
 function FacultyCard({ member, delayClass }) {
   const revealRef = useScrollReveal();
+
+  // An open position is not a person: no name, no biography, no initials.
+  if (member.isOpenPosition) {
+    return (
+      <article
+        className={`faculty-card is-vacancy reveal ${delayClass}`}
+        ref={revealRef}
+      >
+        <Avatar
+          className="faculty-avatar is-vacant"
+          icon={member.icon}
+          gradient={member.gradient}
+          size={128}
+        />
+        <h3 className="faculty-role-heading">{member.role}</h3>
+        <p className="faculty-status">{member.status}</p>
+        <Link to="/contact?subject=other" className="faculty-vacancy-link">
+          Enquire about this role <i className="fas fa-arrow-right" aria-hidden="true"></i>
+        </Link>
+      </article>
+    );
+  }
 
   return (
     <article className={`faculty-card reveal ${delayClass}`} ref={revealRef}>
@@ -19,7 +42,7 @@ function FacultyCard({ member, delayClass }) {
       />
       <h3 className="faculty-name">{member.name}</h3>
       <div className="faculty-role">{member.role}</div>
-      <p className="faculty-bio">{member.bio}</p>
+      {member.bio && <p className="faculty-bio">{member.bio}</p>}
       {member.expertise?.length > 0 && (
         <ul className="faculty-tags">
           {member.expertise.map((tag) => (
@@ -32,31 +55,46 @@ function FacultyCard({ member, delayClass }) {
 }
 
 export default function Faculty() {
+  const vacancies = otherFaculty.filter((m) => m.isOpenPosition).length;
+
   return (
     <section id="faculty" className="faculty">
       <div className="container">
         <Reveal className="section-header">
           <span className="section-tag">Our Experts</span>
-          <h1 className="section-title">Learn from the Best</h1>
+          <h1 className="section-title">Faculty &amp; Leadership</h1>
           <p className="section-subtitle">
-            Our faculty comprises internationally recognized clinicians, researchers, and educators
-            dedicated to your professional growth.
+            BAHIR is led by its founder, with further academic appointments in progress
+            as the academy grows.
           </p>
         </Reveal>
 
-        <div className="faculty-grid">
-          {faculty.map((member, index) => (
-            <FacultyCard
-              key={member.id}
-              member={member}
-              delayClass={index > 0 && index < 4 ? `delay-${index}` : ''}
-            />
-          ))}
-        </div>
+        <FeaturedFaculty member={leadFaculty} />
 
-        {/* The per-member social icons that used to sit on each card linked
-            nowhere — no profiles exist. One real route out of the section
-            replaces twelve controls that did nothing. */}
+        {otherFaculty.length > 0 && (
+          <>
+            <Reveal className="faculty-subhead">
+              <h2>{vacancies === otherFaculty.length ? 'Open Positions' : 'Faculty'}</h2>
+              {vacancies > 0 && (
+                <p>
+                  We are currently recruiting for the following posts. Qualified
+                  clinicians and researchers are encouraged to get in touch.
+                </p>
+              )}
+            </Reveal>
+
+            <div className="faculty-grid">
+              {otherFaculty.map((member, index) => (
+                <FacultyCard
+                  key={member.id}
+                  member={member}
+                  delayClass={index > 0 && index < 4 ? `delay-${index}` : ''}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
         <div className="faculty-cta">
           <p>Interested in working with our faculty, or joining them?</p>
           <Link to="/contact" className="btn btn-outline">

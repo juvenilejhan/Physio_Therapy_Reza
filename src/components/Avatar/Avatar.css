@@ -44,3 +44,23 @@
     font-size: 1.65rem;
   }
 }
+
+/* Open-position fallback: no photo, no initials. Muted relative to a real
+   person's avatar so a vacancy never reads as a member of staff. */
+.avatar-icon {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1;
+}
+
+.avatar.is-vacant {
+  border-style: dashed;
+  border-color: var(--brand-border);
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .avatar-icon {
+    font-size: 1.65rem;
+  }
+}

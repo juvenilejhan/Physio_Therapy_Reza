@@ -19,6 +19,7 @@ export const imageManifest = {
   'facilities/community': [400, 800, 1200],
   'facilities/research-lab': [400, 800, 1200],
   'facilities/training': [400, 800, 1200],
+  'faculty/rezwan': [320, 640],
   'hero/hero': [1600, 2400],
   'news/award': [400, 800],
   'news/partnership': [400, 800],
