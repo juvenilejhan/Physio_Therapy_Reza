@@ -2,14 +2,17 @@
    Keyframes & Scroll Animations
    ========================================================================== */
 
-/* Scroll Reveal */
-.reveal {
+/* Scroll Reveal
+   Gated behind .js-enabled (set by main.jsx). Without the gate, a failure to
+   load JS or an unavailable IntersectionObserver would leave every revealed
+   element permanently at opacity 0 — content present in the DOM but invisible. */
+.js-enabled .reveal {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.reveal.active {
+.js-enabled .reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
@@ -82,4 +85,36 @@
 @keyframes floatParticle {
   0% { transform: translateY(0) translateX(0); }
   100% { transform: translateY(-20px) translateX(10px); }
+}
+
+/* ==========================================================================
+   Reduced Motion — WCAG 2.3.3 / 2.2.2
+
+   Neutralises every decorative animation on the site: hero particles, floating
+   cards, the scroll-wheel indicator, shimmer, and scroll reveals. Reveals are
+   forced to their final visible state rather than simply un-animated, so
+   content never depends on an animation that will not run.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js-enabled .reveal,
+  .animate-fade-up,
+  .animate-fade-left {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-particles,
+  .hero-float-element,
+  .hero-scroll-indicator {
+    display: none;
+  }
 }

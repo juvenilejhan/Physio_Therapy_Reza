@@ -1,3 +1,21 @@
+import { gradients } from './gradients';
+
+/*
+ * Optional image fields
+ * ---------------------
+ * Add `image` to any entry to show a photograph instead of the gradient+icon
+ * fallback. The value is a BASE NAME under assets-src/, with no extension and
+ * no size suffix — the component builds the srcset from it:
+ *
+ *   image: 'courses/example',        // assets-src/courses/example.jpg
+ *   imageAlt: '',               // optional; '' (decorative) is the default
+ *
+ * Then run:  python scripts/optimise-images.py
+ *
+ * Leaving `image` out is fine and fully supported — the gradient treatment is a
+ * finished design, not a placeholder.
+ */
+
 export const courses = [
   {
     id: 1,
@@ -11,7 +29,8 @@ export const courses = [
     badge: 'Popular',
     badgeType: '',
     icon: 'fas fa-bone',
-    gradient: 'linear-gradient(135deg, #7B2D4E, #C9A84C)',
+    image: 'courses/testcourse',
+    gradient: gradients.maroon,
   },
   {
     id: 2,
@@ -25,7 +44,7 @@ export const courses = [
     badge: 'New',
     badgeType: 'new',
     icon: 'fas fa-brain',
-    gradient: 'linear-gradient(135deg, #2D6B4A, #1B2A4A)',
+    gradient: gradients.laurel,
   },
   {
     id: 3,
@@ -39,7 +58,7 @@ export const courses = [
     badge: null,
     badgeType: '',
     icon: 'fas fa-running',
-    gradient: 'linear-gradient(135deg, #1B2A4A, #7B2D4E)',
+    gradient: gradients.bronze,
   },
   {
     id: 4,
@@ -53,7 +72,7 @@ export const courses = [
     badge: null,
     badgeType: '',
     icon: 'fas fa-hand-holding-medical',
-    gradient: 'linear-gradient(135deg, #C9A84C, #2D6B4A)',
+    gradient: gradients.claret,
   },
   {
     id: 5,
@@ -67,7 +86,7 @@ export const courses = [
     badge: null,
     badgeType: '',
     icon: 'fas fa-heartbeat',
-    gradient: 'linear-gradient(135deg, #7B2D4E, #2D6B4A)',
+    gradient: gradients.forest,
   },
   {
     id: 6,
@@ -81,7 +100,7 @@ export const courses = [
     badge: 'Coming Soon',
     badgeType: 'coming',
     icon: 'fas fa-child',
-    gradient: 'linear-gradient(135deg, #2D6B4A, #C9A84C)',
+    gradient: gradients.ember,
   },
 ];
 

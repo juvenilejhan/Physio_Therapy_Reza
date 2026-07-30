@@ -1,3 +1,19 @@
+/*
+ * Optional image fields
+ * ---------------------
+ * Add `image` to any entry to show a photograph instead of the gradient+icon
+ * fallback. The value is a BASE NAME under assets-src/, with no extension and
+ * no size suffix — the component builds the srcset from it:
+ *
+ *   image: 'events/example',        // assets-src/events/example.jpg
+ *   imageAlt: '',               // optional; '' (decorative) is the default
+ *
+ * Then run:  python scripts/optimise-images.py
+ *
+ * Leaving `image` out is fine and fully supported — the gradient treatment is a
+ * finished design, not a placeholder.
+ */
+
 export const events = [
   {
     id: 1,

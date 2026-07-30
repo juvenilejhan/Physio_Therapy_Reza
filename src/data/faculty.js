@@ -1,3 +1,18 @@
+import { gradients } from './gradients';
+
+/*
+ * Optional portrait
+ * -----------------
+ * Add `image: 'faculty/surname'` (base name, no extension) to show a
+ * photograph; drop the original into assets-src/faculty/ and run
+ * `python scripts/optimise-images.py`.
+ *
+ * These entries name real people. Use a genuine photograph of that individual,
+ * with their permission — never stock photography. With no `image` the card
+ * shows their initials on a brand gradient, which is a finished design and a
+ * perfectly valid final state.
+ */
+
 export const faculty = [
   {
     id: 1,
@@ -5,12 +20,8 @@ export const faculty = [
     role: 'Dean, Musculoskeletal Sciences',
     bio: '25+ years of clinical and academic experience in orthopedic physiotherapy. PhD from University of Sydney.',
     initials: 'MR',
-    gradient: 'linear-gradient(135deg, #7B2D4E, #C9A84C)',
-    socials: [
-      { icon: 'fab fa-linkedin-in', label: 'LinkedIn', href: '#' },
-      { icon: 'fab fa-researchgate', label: 'Research Gate', href: '#' },
-      { icon: 'fas fa-envelope', label: 'Email', href: '#' },
-    ],
+    gradient: gradients.maroon,
+    expertise: ['Orthopaedic PT', 'Manual Therapy', 'Clinical Education'],
   },
   {
     id: 2,
@@ -18,12 +29,8 @@ export const faculty = [
     role: 'Head, Neurological Rehabilitation',
     bio: 'Specialist in neurological physiotherapy with research focus on stroke rehabilitation. Published 50+ peer-reviewed papers.',
     initials: 'AK',
-    gradient: 'linear-gradient(135deg, #2D6B4A, #1B2A4A)',
-    socials: [
-      { icon: 'fab fa-linkedin-in', label: 'LinkedIn', href: '#' },
-      { icon: 'fab fa-researchgate', label: 'Research Gate', href: '#' },
-      { icon: 'fas fa-envelope', label: 'Email', href: '#' },
-    ],
+    gradient: gradients.laurel,
+    expertise: ['Stroke Rehab', 'Neuroplasticity', 'Clinical Research'],
   },
   {
     id: 3,
@@ -31,12 +38,8 @@ export const faculty = [
     role: 'Director, Sports Medicine',
     bio: 'Former national team physiotherapist. Expert in sports injury prevention and performance optimization.',
     initials: 'TI',
-    gradient: 'linear-gradient(135deg, #C9A84C, #7B2D4E)',
-    socials: [
-      { icon: 'fab fa-linkedin-in', label: 'LinkedIn', href: '#' },
-      { icon: 'fab fa-researchgate', label: 'Research Gate', href: '#' },
-      { icon: 'fas fa-envelope', label: 'Email', href: '#' },
-    ],
+    gradient: gradients.bronze,
+    expertise: ['Sports Injury', 'Biomechanics', 'Return-to-Play'],
   },
   {
     id: 4,
@@ -44,11 +47,7 @@ export const faculty = [
     role: 'Lead, Research & Innovation',
     bio: 'Pioneering researcher in digital health interventions and AI-assisted physiotherapy assessment methods.',
     initials: 'SB',
-    gradient: 'linear-gradient(135deg, #1B2A4A, #2D6B4A)',
-    socials: [
-      { icon: 'fab fa-linkedin-in', label: 'LinkedIn', href: '#' },
-      { icon: 'fab fa-researchgate', label: 'Research Gate', href: '#' },
-      { icon: 'fas fa-envelope', label: 'Email', href: '#' },
-    ],
+    gradient: gradients.claret,
+    expertise: ['Digital Health', 'AI Assessment', 'Research Design'],
   },
 ];

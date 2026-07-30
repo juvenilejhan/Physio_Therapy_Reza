@@ -2,11 +2,11 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: var(--gradient-gold);
-  color: #0f172a;
+  background: var(--gradient-accent);
+  color: var(--on-accent);
   border: none;
   display: flex;
   align-items: center;
@@ -25,9 +25,9 @@
 }
 
 .back-to-top:hover {
-  background: var(--accent-gold);
+  background: var(--accent);
   transform: translateY(-3px);
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-accent);
 }
 
 .back-to-top:active {

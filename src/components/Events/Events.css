@@ -2,10 +2,23 @@
   background: var(--dark-navy);
 }
 
+/* auto-FILL with a CAPPED track, and justify-content:center.
+
+   Three separate things are needed here and each fixes a different bug:
+   - auto-fill (not auto-fit): auto-fit collapses empty tracks, which stretched
+     a single filtered card across the whole row.
+   - minmax(300px, 360px) (not 1fr): 1fr makes tracks fill the row, which
+     pinned the group to the left edge with dead space beside it.
+   - justify-content: center: centres the track group, so one result sits in
+     the middle instead of hugging the left. */
 .events-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* wider cap than the other grids: these cards lay the date block out
+     beside the content, so 360px is too narrow */
+  grid-template-columns: repeat(auto-fill, minmax(330px, 470px));
+  justify-content: center;
   gap: 2rem;
+  align-items: stretch;
 }
 
 .event-card {
@@ -15,7 +28,7 @@
   display: flex;
   gap: 2rem;
   border: 1px solid rgba(255,255,255,0.05);
-  border-left: 4px solid var(--accent-gold);
+  border-left: 4px solid var(--accent);
   transition: all var(--transition-normal);
 }
 
@@ -29,22 +42,16 @@
   grid-column: 1 / -1;
   flex-direction: row;
   border-left: none;
-  border-top: 4px solid var(--primary-maroon);
+  border-top: 4px solid var(--primary);
 }
 
 .event-card.event-featured:hover {
   transform: translateY(-10px);
 }
 
-.events-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  grid-column: 2 / -1;
-}
-
 .event-date {
-  background: rgba(201,168,76,0.1);
+  background: var(--accent-wash);
+  flex-shrink: 0;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   min-width: 80px;
@@ -65,7 +72,7 @@
 .event-month {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--accent-gold);
+  color: var(--accent-text);
   text-transform: uppercase;
 }
 
@@ -128,15 +135,11 @@
 
 @media (max-width: 768px) {
   .events-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
-  
+
   .event-card.event-featured {
-    grid-column: 1 / -1;
-  }
-  
-  .events-stack {
-    grid-column: 1 / -1;
+    flex-direction: column;
   }
 }
 
@@ -152,5 +155,73 @@
     padding: 1rem;
     flex-direction: row;
     gap: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Optional banner (.has-media)
+
+   Only applied when an event supplies an image. Without one the card keeps the
+   original horizontal date-beside-content layout, so this section is unchanged
+   until photographs exist.
+   ========================================================================== */
+.event-card.has-media {
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border-left-width: 1px;
+  overflow: hidden;
+}
+
+.event-banner {
+  position: relative;
+  width: 100%;
+}
+
+/* Date chip lifts off the banner and sits over its lower-left corner. */
+.event-card.has-media .event-date {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 2;
+  margin: 0;
+  background: rgba(26, 8, 16, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-color: var(--brand-border);
+}
+
+/* Scrim so the chip stays legible over a bright photograph. */
+.event-banner .card-media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(26, 8, 16, 0.85), transparent);
+  pointer-events: none;
+}
+
+.event-card.has-media .event-content {
+  padding: 1.5rem 2rem 2rem;
+}
+
+.event-card.has-media:hover {
+  transform: translateY(-6px);
+}
+
+@media (max-width: 480px) {
+  .event-card.has-media {
+    flex-direction: column;
+  }
+
+  .event-card.has-media .event-date {
+    flex-direction: column;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+    gap: 0;
+  }
+
+  .event-card.has-media .event-content {
+    padding: 1.25rem 1.35rem 1.5rem;
   }
 }

@@ -6,16 +6,70 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 1;
   transition: opacity 0.5s ease;
 }
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(255,255,255,0.1);
-  border-radius: 50%;
-  border-top-color: var(--accent-gold);
-  animation: spin 1s linear infinite;
+
+/* Toggled by the component 500ms before unmount so the fade actually plays. */
+#preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
-@keyframes spin {
-  to { transform: rotate(360deg); }
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  max-width: 420px;
+}
+
+.preloader-logo {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  background: var(--gradient-heading);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+}
+
+.preloader-text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+}
+
+.preloader-bar {
+  width: 200px;
+  max-width: 60vw;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--border-light);
+  overflow: hidden;
+}
+
+.preloader-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--gradient-accent);
+  animation: loading 1.4s ease-in-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #preloader {
+    transition: none;
+  }
+
+  .preloader-fill {
+    animation: none;
+    width: 100%;
+  }
 }

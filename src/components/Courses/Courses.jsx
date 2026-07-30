@@ -1,90 +1,138 @@
 import { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { courses, courseCategories } from '../../data/courses';
 import useScrollReveal from '../../hooks/useScrollReveal';
+import Reveal from '../Reveal/Reveal';
+import CardMedia from '../CardMedia/CardMedia';
 import './Courses.css';
 
-function CourseCard({ course, activeFilter }) {
+function CourseCard({ course }) {
   const revealRef = useScrollReveal();
-  const [style, setStyle] = useState({ display: 'block', opacity: 1, transform: 'scale(1)' });
-  
-  const isMatch = activeFilter === 'all' || activeFilter === course.category;
-
-  useEffect(() => {
-    if (isMatch) {
-      setStyle({ display: 'block', opacity: 1, transform: 'scale(1)' });
-    } else {
-      setStyle(prev => ({ ...prev, opacity: 0, transform: 'scale(0.8)' }));
-      const timer = setTimeout(() => {
-        setStyle({ display: 'none', opacity: 0, transform: 'scale(0.8)' });
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isMatch]);
 
   return (
-    <div 
-      className="course-card reveal" 
-      ref={revealRef}
-      style={style}
-    >
-      <div className="course-image" style={{ background: course.gradient }}>
+    <article className="course-card reveal" ref={revealRef}>
+      <CardMedia
+        className="course-image"
+        image={course.image}
+        imageAlt={course.imageAlt}
+        gradient={course.gradient}
+        icon={course.icon}
+        ratio="16 / 10"
+      >
         {course.badge && <div className={`course-badge ${course.badgeType}`}>{course.badge}</div>}
-        <div className="course-image-icon"><i className={course.icon}></i></div>
-      </div>
+      </CardMedia>
+
       <div className="course-content">
         <div className="course-meta">
           <span className="course-category">{course.categoryLabel}</span>
-          <span className="course-duration"><i className="far fa-clock"></i> {course.duration}</span>
+          <span className="course-duration">
+            <i className="far fa-clock" aria-hidden="true"></i> {course.duration}
+          </span>
         </div>
         <h3 className="course-title">{course.title}</h3>
         <p className="course-desc">{course.description}</p>
         <div className="course-footer">
           <div className="course-instructor">
-            <div className="instructor-avatar">{course.instructorInitials}</div>
+            <div className="instructor-avatar" aria-hidden="true">{course.instructorInitials}</div>
             <span>{course.instructor}</span>
           </div>
-          <a href="#" onClick={(e) => e.preventDefault()} className="btn btn-sm btn-outline">Enroll Now</a>
+          {/* Enquiry lands on /contact with the course preselected — it used to
+              point at /courses, i.e. the page the button lives on. */}
+          <Link
+            to={`/contact?course=${course.id}`}
+            className="btn btn-sm btn-outline"
+            aria-label={`Enquire about ${course.title}`}
+          >
+            Enroll Now
+          </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
-export default function Courses() {
+/**
+ * @param {'h1'|'h2'} titleAs  heading level for the section title. Home already
+ *   has an <h1> in the hero, so it stays 'h2' there; CoursesPage passes 'h1'
+ *   because this section is the page's lead content.
+ */
+export default function Courses({ titleAs: Title = 'h2' }) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeFilter, setActiveFilter] = useState('all');
-  const headerRef = useScrollReveal();
+
+  // Footer program links deep-link here as /courses?category=<key>. Kept in
+  // sync both ways so the filter is shareable and survives a reload.
+  useEffect(() => {
+    const fromUrl = searchParams.get('category');
+    const isValid = courseCategories.some((c) => c.key === fromUrl);
+    setActiveFilter(isValid ? fromUrl : 'all');
+  }, [searchParams]);
+
+  const selectFilter = (key) => {
+    setActiveFilter(key);
+    const next = new URLSearchParams(searchParams);
+    if (key === 'all') next.delete('category');
+    else next.set('category', key);
+    setSearchParams(next, { replace: true });
+  };
+
+  const visible = courses.filter(
+    (course) => activeFilter === 'all' || activeFilter === course.category
+  );
+  const activeLabel =
+    courseCategories.find((c) => c.key === activeFilter)?.label ?? 'All Courses';
 
   return (
     <section id="courses" className="courses">
       <div className="container">
-        <div className="section-header reveal" ref={headerRef}>
+        <Reveal className="section-header">
           <span className="section-tag">Our Programs</span>
-          <h2 className="section-title">Featured Courses & Programs</h2>
-          <p className="section-subtitle">Comprehensive, evidence-based physiotherapy courses designed by industry experts for healthcare professionals at every stage of their career.</p>
-        </div>
-        
-        <div className="courses-filter">
+          <Title className="section-title">Featured Courses &amp; Programs</Title>
+          <p className="section-subtitle">
+            Comprehensive, evidence-based physiotherapy courses designed by industry experts for
+            healthcare professionals at every stage of their career.
+          </p>
+        </Reveal>
+
+        <div className="courses-filter" role="group" aria-label="Filter courses by category">
           {courseCategories.map((category) => (
-            <button 
+            <button
               key={category.key}
+              type="button"
               className={`filter-btn ${activeFilter === category.key ? 'active' : ''}`}
-              onClick={() => setActiveFilter(category.key)}
+              onClick={() => selectFilter(category.key)}
+              aria-pressed={activeFilter === category.key}
             >
               {category.label}
             </button>
           ))}
         </div>
-        
+
+        {/* Visible to everyone, and announced — the count used to be sr-only. */}
+        <p className="courses-result-count" aria-live="polite">
+          Showing {visible.length} {visible.length === 1 ? 'course' : 'courses'}
+          {activeFilter !== 'all' && ` in ${activeLabel}`}
+        </p>
+
         <div className="courses-grid">
-          {courses.map((course) => (
-            <CourseCard key={course.id} course={course} activeFilter={activeFilter} />
-          ))}
+          {visible.length > 0 ? (
+            visible.map((course) => <CourseCard key={course.id} course={course} />)
+          ) : (
+            <div className="courses-empty">
+              <i className="fas fa-folder-open" aria-hidden="true"></i>
+              <h3>No courses in this category yet</h3>
+              <p>New programs are added each term. Get in touch and we&apos;ll let you know first.</p>
+              <button type="button" className="btn btn-outline" onClick={() => selectFilter('all')}>
+                View all courses
+              </button>
+            </div>
+          )}
         </div>
-        
+
         <div className="courses-cta">
-          <a href="#" onClick={(e) => e.preventDefault()} className="btn btn-primary btn-lg">
-            <span>View All Courses</span> <i className="fas fa-arrow-right"></i>
-          </a>
+          <Link to="/contact" className="btn btn-primary btn-lg">
+            <span>Request a prospectus</span> <i className="fas fa-arrow-right" aria-hidden="true"></i>
+          </Link>
         </div>
       </div>
     </section>

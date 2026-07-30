@@ -23,13 +23,13 @@
 
 .stat-item:hover {
   transform: translateY(-5px);
-  border-color: var(--accent-gold);
+  border-color: var(--accent);
   box-shadow: var(--shadow-md);
 }
 
 .stat-icon {
   font-size: 2.5rem;
-  color: var(--accent-gold);
+  color: var(--accent-text);
   margin-bottom: 1rem;
   transition: transform var(--transition-fast);
 }
@@ -55,7 +55,7 @@
   font-size: 0.85rem;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;

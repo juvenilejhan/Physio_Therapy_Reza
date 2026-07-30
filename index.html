@@ -2,16 +2,59 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+    <!-- Favicon uses a shield-only crop of the crest: the full badge's laurel
+         ring and banner text are illegible below ~56px. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
     <!-- Primary Meta Tags -->
     <title>BAHIR - Bangladesh Academy of Health Innovation & Research</title>
     <meta name="description" content="Leading physiotherapy academy offering expert courses, musculoskeletal training, and neurological rehabilitation programs.">
-    
+    <meta name="theme-color" content="#1a0810" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BAHIR - Bangladesh Academy of Health Innovation & Research">
+    <meta property="og:description" content="Leading physiotherapy academy offering expert courses, musculoskeletal training, and neurological rehabilitation programs.">
+    <meta property="og:image" content="/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="BAHIR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BAHIR - Bangladesh Academy of Health Innovation & Research">
+    <meta name="twitter:description" content="Leading physiotherapy academy offering expert courses, musculoskeletal training, and neurological rehabilitation programs.">
+    <meta name="twitter:image" content="/og-image.png">
+
+    <!--
+      Resolve the theme before first paint. Without this the app writes
+      data-theme in a useEffect, i.e. after the browser has already painted the
+      dark default — light-mode users see a dark flash on every load.
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('bahir-theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Fonts: preconnect so the handshake overlaps CSS parsing -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap">
+
+    <!-- Hero background is the LCP element -->
+    <link rel="preload" as="image" href="/assets/hero_bg.jpg">
+
     <!-- Font Awesome -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
   </head>
   <body>
     <div id="root"></div>

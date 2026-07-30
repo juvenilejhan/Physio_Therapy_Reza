@@ -5,13 +5,15 @@ main {
   animation: fadeIn 0.3s ease;
 }
 
-/* Page wrapper provides spacing for fixed navbar */
+/* Clears the fixed navbar. Driven by --nav-height so the navbar, this offset
+   and the hero padding can never drift apart. Pages must not override this
+   with an inline style — an inline padding-top beats the media query below. */
 .page-wrapper {
-  padding-top: 120px;
+  padding-top: calc(var(--nav-height) + 2rem);
 }
 
 @media (max-width: 768px) {
   .page-wrapper {
-    padding-top: 100px;
+    padding-top: calc(var(--nav-height) + 1rem);
   }
 }

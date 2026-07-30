@@ -1,134 +1,171 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import useTheme from "../../hooks/useTheme";
 import "./Navbar.css";
+
+const NAV_ITEMS = [
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About" },
+  { to: "/courses", label: "Programs" },
+  { to: "/faculty", label: "Faculty" },
+  { to: "/media", label: "Media & Events" },
+  { to: "/contact", label: "Contact" },
+];
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const toggleRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
+  // Close the drawer on navigation. Scroll restoration is handled by
+  // <ScrollToTop> in App.jsx — it isn't the navbar's job.
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    window.scrollTo(0, 0); // Scroll to top on route change
   }, [location.pathname]);
+
+  // Lock background scroll while the drawer is open. The previous value is
+  // captured and restored rather than cleared, so we don't stomp on an
+  // overflow set by something else.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.overflow = previousOverflow;
+    };
+  }, [isMobileMenuOpen]);
+
+  // Escape closes; Tab is trapped inside the drawer so focus can't wander into
+  // the page behind it.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        toggleRef.current?.focus();
+        return;
+      }
+
+      if (e.key !== "Tab" || !menuRef.current) return;
+
+      const items = [
+        ...menuRef.current.querySelectorAll(FOCUSABLE),
+        toggleRef.current,
+      ].filter(Boolean);
+      if (items.length === 0) return;
+
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const navLinkClass = ({ isActive }) =>
+    isActive ? "nav-link active" : "nav-link";
 
   return (
     <nav id="navbar" className={`navbar ${isScrolled ? "scrolled" : ""}`}>
       <div className="container nav-container">
-        <Link to="/" className="nav-logo">
+        <Link
+          to="/"
+          className="nav-logo"
+          aria-label="BAHIR — Bangladesh Academy of Health Innovation & Research, home"
+        >
           <img
-            src="/assets/hero.jpeg"
-            alt="BAHIR Logo"
-            className="logo-img"
-            onError={(e) => {
-              e.target.style.display = "none";
-            }}
+            className="logo-mark"
+            src="/assets/logo-56.png"
+            srcSet="/assets/logo-56.png 1x, /assets/logo-112.png 2x"
+            alt=""
+            width="56"
+            height="56"
+            aria-hidden="true"
           />
-          <div className="logo-text">
+          <span className="logo-text">
             <span className="logo-name">BAHIR</span>
-            <span className="logo-tagline">Health Innovation</span>
-          </div>
+            {/* The full institute name is long, so it steps down with the
+                viewport. The link's aria-label carries it in full at every
+                size, so nothing is lost when these are hidden. */}
+            <span className="logo-tagline" aria-hidden="true">
+              <span className="logo-tagline-full">
+                Bangladesh Academy of Health Innovation &amp; Research
+              </span>
+              <span className="logo-tagline-short">
+                Academy of Health Innovation &amp; Research
+              </span>
+            </span>
+          </span>
         </Link>
 
-        <ul className={`nav-menu ${isMobileMenuOpen ? "active" : ""}`}>
-          <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/courses"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              Programs
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/faculty"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              Faculty
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/media"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              Media & Events
-            </NavLink>
-          </li>
-        </ul>
-
         <div
-          className="nav-right"
-          style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+          id="nav-menu"
+          ref={menuRef}
+          className={`nav-menu ${isMobileMenuOpen ? "active" : ""}`}
         >
-          <div className="nav-actions">
-            <a href="#apply" className="btn btn-outline apply-btn">
-              Apply Now
-            </a>
-            <a
-              href="#"
-              className="btn btn-primary btn-sm"
-              id="getStartedBtn"
-              onClick={(e) => e.preventDefault()}
-            >
-              Get Started
-            </a>
-          </div>
+          <ul className="nav-links">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.to}>
+                <NavLink to={item.to} className={navLinkClass} end={item.to === "/"}>
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
 
+          {/* Rendered inside the drawer as well as the desktop bar — previously
+              `.nav-actions { display: none }` on mobile left these unreachable. */}
+          <div className="nav-actions">
+            <Link to="/contact" className="btn btn-primary btn-sm">
+              Apply Now
+            </Link>
+          </div>
+        </div>
+
+        <div className="nav-right">
           <button
+            type="button"
             className="theme-toggle"
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
           >
-            {theme === "dark" ? (
-              <i className="fas fa-sun"></i>
-            ) : (
-              <i className="fas fa-moon"></i>
-            )}
+            <i className={theme === "dark" ? "fas fa-sun" : "fas fa-moon"} aria-hidden="true"></i>
           </button>
 
           <button
+            type="button"
+            ref={toggleRef}
             className={`nav-toggle ${isMobileMenuOpen ? "active" : ""}`}
             id="navToggle"
-            aria-label="Toggle navigation menu"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="nav-menu"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
           >
             <span></span>
             <span></span>

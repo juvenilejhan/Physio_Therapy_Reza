@@ -1,10 +1,21 @@
+/* The footer is the brand surface — a deep maroon-black drawn from the crest
+   banner, not the interface blue. It is dark in BOTH themes, so it pins the
+   light-on-dark ramp instead of inheriting the theme's; the brand and accent
+   text tokens must be pinned too, or the light theme's dark variants land on
+   a near-black panel. */
 .footer {
-  background: #050810;
+  background: linear-gradient(180deg, #1a0810 0%, #12060b 100%);
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
+  --accent-text: #7dd3fc;
+  --accent: #38bdf8;
+  --brand-gold-text: #e3b96a;
+  --brand-wash: rgba(200, 164, 92, 0.12);
+  --brand-border: rgba(200, 164, 92, 0.3);
+  --border-light: rgba(255, 255, 255, 0.1);
   padding: 5rem 0 0;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid var(--brand-border);
 }
 
 .footer-grid {
@@ -17,7 +28,7 @@
 .footer-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -26,18 +37,32 @@
   width: auto;
 }
 
-.footer-logo-name {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-  margin: 0;
+.footer-logo-mark {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
-.footer-logo-full {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
+.footer-logo-name {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ffffff;
   margin: 0;
+  line-height: 1.1;
+}
+
+/* The institute's actual name — previously reduced to "Health Innovation &
+   Research" while the acronym did all the visible work. */
+.footer-logo-full {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--brand-gold-text);
+  letter-spacing: 0.02em;
+  margin: 0.15rem 0 0;
+  max-width: 26ch;
 }
 
 .footer-description {
@@ -47,32 +72,14 @@
   font-size: 0.95rem;
 }
 
-.footer-social {
-  display: flex;
-  gap: 1rem;
-}
-
-.footer-social a {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.footer-social a:hover {
-  background: var(--accent-gold);
-  color: #0f172a;
-  border-color: var(--accent-gold);
-  transform: translateY(-3px);
+.footer-cta-line {
+  margin: 0;
 }
 
 .footer-title {
+  font-family: var(--font-heading);
   font-size: 1.25rem;
+  font-weight: 600;
   margin-bottom: 1.5rem;
   color: var(--text-primary);
 }
@@ -89,7 +96,7 @@
 }
 
 .footer-links ul li a:hover {
-  color: var(--accent-gold);
+  color: var(--accent-text);
   padding-left: 5px;
 }
 
@@ -108,7 +115,7 @@
 }
 
 .contact-icon {
-  color: var(--accent-gold);
+  color: var(--accent-text);
   font-size: 1.25rem;
   margin-top: 2px;
   width: 16px;
@@ -130,16 +137,20 @@
 
 .footer-bottom-links {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
 }
 
 .footer-bottom-links a {
   color: var(--text-secondary);
   font-size: 0.875rem;
+  transition: color var(--transition-fast);
 }
 
 .footer-bottom-links a:hover {
-  color: var(--accent-gold);
+  color: var(--accent-text);
+  text-decoration: underline;
 }
 
 @media (max-width: 1024px) {

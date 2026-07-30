@@ -1,46 +1,67 @@
+import { Link } from 'react-router-dom';
 import { faculty } from '../../data/faculty';
+import Avatar from '../Avatar/Avatar';
 import useScrollReveal from '../../hooks/useScrollReveal';
+import Reveal from '../Reveal/Reveal';
 import './Faculty.css';
 
 function FacultyCard({ member, delayClass }) {
   const revealRef = useScrollReveal();
-  
+
   return (
-    <div className={`faculty-card reveal ${delayClass}`} ref={revealRef}>
-      <div className="faculty-avatar" style={{ background: member.gradient }}>
-        {member.initials}
-      </div>
+    <article className={`faculty-card reveal ${delayClass}`} ref={revealRef}>
+      <Avatar
+        className="faculty-avatar"
+        image={member.image}
+        initials={member.initials}
+        gradient={member.gradient}
+        size={128}
+      />
       <h3 className="faculty-name">{member.name}</h3>
       <div className="faculty-role">{member.role}</div>
       <p className="faculty-bio">{member.bio}</p>
-      <div className="faculty-social">
-        {member.socials.map((social, index) => (
-          <a key={index} href={social.href} title={social.label}>
-            <i className={social.icon}></i>
-          </a>
-        ))}
-      </div>
-    </div>
+      {member.expertise?.length > 0 && (
+        <ul className="faculty-tags">
+          {member.expertise.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
+      )}
+    </article>
   );
 }
 
 export default function Faculty() {
-  const headerRef = useScrollReveal();
-
   return (
     <section id="faculty" className="faculty">
       <div className="container">
-        <div className="section-header reveal" ref={headerRef}>
+        <Reveal className="section-header">
           <span className="section-tag">Our Experts</span>
-          <h2 className="section-title">Learn from the Best</h2>
-          <p className="section-subtitle">Our faculty comprises internationally recognized clinicians, researchers, and educators dedicated to your professional growth.</p>
-        </div>
-        
+          <h1 className="section-title">Learn from the Best</h1>
+          <p className="section-subtitle">
+            Our faculty comprises internationally recognized clinicians, researchers, and educators
+            dedicated to your professional growth.
+          </p>
+        </Reveal>
+
         <div className="faculty-grid">
-          {faculty.map((member, index) => {
-            const delayClass = index === 1 ? 'delay-1' : index === 2 ? 'delay-2' : index === 3 ? 'delay-3' : '';
-            return <FacultyCard key={member.id} member={member} delayClass={delayClass} />;
-          })}
+          {faculty.map((member, index) => (
+            <FacultyCard
+              key={member.id}
+              member={member}
+              delayClass={index > 0 && index < 4 ? `delay-${index}` : ''}
+            />
+          ))}
+        </div>
+
+        {/* The per-member social icons that used to sit on each card linked
+            nowhere — no profiles exist. One real route out of the section
+            replaces twelve controls that did nothing. */}
+        <div className="faculty-cta">
+          <p>Interested in working with our faculty, or joining them?</p>
+          <Link to="/contact" className="btn btn-outline">
+            Contact the academic office <i className="fas fa-arrow-right" aria-hidden="true"></i>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update the host below to the production domain before launch.
+Sitemap: https://bahir.edu.bd/sitemap.xml

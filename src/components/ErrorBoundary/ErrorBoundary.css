@@ -1,0 +1,79 @@
+.error-boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem 1.5rem;
+  background: var(--dark-navy);
+}
+
+.error-boundary-inner {
+  max-width: 520px;
+  text-align: center;
+}
+
+.error-boundary-inner i {
+  font-size: 3rem;
+  color: var(--error-text);
+  margin-bottom: 1.25rem;
+}
+
+.error-boundary-inner h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.error-boundary-inner p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.error-boundary-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Route suspense fallback
+   ========================================================================== */
+.route-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 70vh;
+  padding: 4rem 1.5rem;
+}
+
+.route-loading-bar {
+  width: 200px;
+  max-width: 60vw;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--border-light);
+  overflow: hidden;
+}
+
+.route-loading-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--gradient-accent);
+  animation: loading 1.2s ease-in-out infinite;
+}
+
+.route-loading p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loading-fill {
+    animation: none;
+    width: 100%;
+  }
+}

@@ -1,88 +1,124 @@
-import useScrollReveal from '../../hooks/useScrollReveal';
+import Reveal from '../Reveal/Reveal';
+import CardMedia from '../CardMedia/CardMedia';
+import { gradients } from '../../data/gradients';
 import './About.css';
 
-export default function About() {
-  const headerRef = useScrollReveal();
-  const missionRef1 = useScrollReveal();
-  const missionRef2 = useScrollReveal();
-  const imgRef1 = useScrollReveal();
-  const imgRef2 = useScrollReveal();
-  const imgRef3 = useScrollReveal();
-  const valRef1 = useScrollReveal();
-  const valRef2 = useScrollReveal();
-  const valRef3 = useScrollReveal();
-  const valRef4 = useScrollReveal();
+const MISSION_CARDS = [
+  {
+    icon: 'fas fa-bullseye',
+    title: 'Our Mission',
+    body: 'To advance the science and practice of physiotherapy through innovative education, rigorous research, and community engagement — producing healthcare professionals who transform patient outcomes globally.',
+  },
+  {
+    icon: 'fas fa-eye',
+    title: 'Our Vision',
+    body: 'To become the premier institution for health innovation and research in South Asia, recognized globally for our commitment to evidence-based physiotherapy practice and educational excellence.',
+  },
+];
 
+/**
+ * Facility cards.
+ *
+ * `image` is an optional BASE NAME under assets-src/facilities/ — no extension,
+ * no size suffix, e.g. `image: 'facilities/training-room'`. Drop the original
+ * into assets-src/facilities/ and run `python scripts/optimise-images.py`.
+ *
+ * Without one, CardMedia renders the gradient and icon, which is a finished
+ * design rather than a placeholder. `imageAlt` defaults to '' because the label
+ * beneath already names the subject.
+ */
+const IMAGE_CARDS = [
+  {
+    icon: 'fas fa-hands-helping',
+    label: 'Hands-on Training',
+    gradient: gradients.maroon,
+    wide: true,
+    ratio: '16 / 9',
+    sizes: '(max-width: 768px) 100vw, 600px',
+  },
+  {
+    icon: 'fas fa-microscope',
+    label: 'Research Labs',
+    gradient: gradients.laurel,
+    ratio: '4 / 3',
+    sizes: '(max-width: 768px) 50vw, 290px',
+  },
+  {
+    icon: 'fas fa-users',
+    label: 'Global Community',
+    gradient: gradients.bronze,
+    ratio: '4 / 3',
+    sizes: '(max-width: 768px) 50vw, 290px',
+  },
+];
+
+const VALUES = [
+  { icon: 'fas fa-star', title: 'Excellence', body: 'Uncompromising commitment to the highest standards in education and research.' },
+  { icon: 'fas fa-lightbulb', title: 'Innovation', body: 'Embracing cutting-edge methods and technologies to advance healthcare practice.' },
+  { icon: 'fas fa-handshake', title: 'Integrity', body: 'Upholding ethical principles in all our academic and research endeavors.' },
+  { icon: 'fas fa-globe-americas', title: 'Global Impact', body: 'Creating healthcare professionals who make a lasting difference worldwide.' },
+];
+
+export default function About() {
   return (
     <section id="about" className="about">
       <div className="container">
-        <div className="section-header reveal" ref={headerRef}>
+        <Reveal className="section-header">
           <span className="section-tag">About Us</span>
-          <h2 className="section-title">Pioneering Physiotherapy Education & Research</h2>
-          <p className="section-subtitle">Committed to excellence since our founding, BAHIR stands as a beacon of health innovation in Bangladesh and beyond.</p>
-        </div>
-        
+          <h1 className="section-title">Pioneering Physiotherapy Education &amp; Research</h1>
+          <p className="section-subtitle">
+            Committed to excellence since our founding, BAHIR stands as a beacon of health innovation
+            in Bangladesh and beyond.
+          </p>
+        </Reveal>
+
         <div className="about-grid">
           <div className="about-content">
             <div className="about-mission">
-              <div className="mission-card reveal" ref={missionRef1}>
-                <div className="mission-icon"><i className="fas fa-bullseye"></i></div>
-                <h3>Our Mission</h3>
-                <p>To advance the science and practice of physiotherapy through innovative education, rigorous research, and community engagement — producing healthcare professionals who transform patient outcomes globally.</p>
-              </div>
-              <div className="mission-card reveal" ref={missionRef2}>
-                <div className="mission-icon"><i className="fas fa-eye"></i></div>
-                <h3>Our Vision</h3>
-                <p>To become the premier institution for health innovation and research in South Asia, recognized globally for our commitment to evidence-based physiotherapy practice and educational excellence.</p>
-              </div>
+              {MISSION_CARDS.map((card) => (
+                <Reveal key={card.title} className="mission-card">
+                  <div className="mission-icon" aria-hidden="true"><i className={card.icon}></i></div>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </Reveal>
+              ))}
             </div>
           </div>
-          
+
+          {/* Was an absolutely-positioned "collage" in which all three cards
+              overlapped each other and Global Community occluded Research Labs.
+              Now a real grid: one wide card, two beneath it. */}
           <div className="about-visual">
             <div className="about-image-grid">
-              <div className="about-img-card about-img-1 reveal" ref={imgRef1}>
-                <div className="about-img-overlay">
-                  <i className="fas fa-hands-helping"></i>
-                  <span>Hands-on Training</span>
-                </div>
-              </div>
-              <div className="about-img-card about-img-2 reveal" ref={imgRef2}>
-                <div className="about-img-overlay">
-                  <i className="fas fa-microscope"></i>
-                  <span>Research Labs</span>
-                </div>
-              </div>
-              <div className="about-img-card about-img-3 reveal" ref={imgRef3}>
-                <div className="about-img-overlay">
-                  <i className="fas fa-users"></i>
-                  <span>Global Community</span>
-                </div>
-              </div>
+              {IMAGE_CARDS.map((card) => (
+                <Reveal
+                  key={card.label}
+                  className={`about-img-card ${card.wide ? 'is-wide' : ''}`}
+                >
+                  <CardMedia
+                    image={card.image}
+                    imageAlt={card.imageAlt}
+                    gradient={card.gradient}
+                    icon={card.icon}
+                    ratio={card.ratio}
+                    sizes={card.sizes}
+                  >
+                    <span className="about-img-label">{card.label}</span>
+                  </CardMedia>
+                </Reveal>
+              ))}
             </div>
           </div>
         </div>
-        
+
         <div className="about-values">
-          <div className="value-item reveal" ref={valRef1}>
-            <div className="value-icon"><i className="fas fa-star"></i></div>
-            <h4>Excellence</h4>
-            <p>Uncompromising commitment to the highest standards in education and research.</p>
-          </div>
-          <div className="value-item reveal" ref={valRef2}>
-            <div className="value-icon"><i className="fas fa-lightbulb"></i></div>
-            <h4>Innovation</h4>
-            <p>Embracing cutting-edge methods and technologies to advance healthcare practice.</p>
-          </div>
-          <div className="value-item reveal" ref={valRef3}>
-            <div className="value-icon"><i className="fas fa-handshake"></i></div>
-            <h4>Integrity</h4>
-            <p>Upholding ethical principles in all our academic and research endeavors.</p>
-          </div>
-          <div className="value-item reveal" ref={valRef4}>
-            <div className="value-icon"><i className="fas fa-globe-americas"></i></div>
-            <h4>Global Impact</h4>
-            <p>Creating healthcare professionals who make a lasting difference worldwide.</p>
-          </div>
+          {VALUES.map((value, index) => (
+            <Reveal key={value.title} className="value-item" delay={index}>
+              <div className="value-icon" aria-hidden="true"><i className={value.icon}></i></div>
+              <h4>{value.title}</h4>
+              <p>{value.body}</p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

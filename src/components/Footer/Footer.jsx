@@ -1,6 +1,39 @@
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
+const QUICK_LINKS = [
+  { to: '/about', label: 'About Us' },
+  { to: '/courses', label: 'Our Programs' },
+  { to: '/faculty', label: 'Faculty' },
+  { to: '/media', label: 'Media & Events' },
+  { to: '/contact', label: 'Contact' },
+  { to: '/contact', label: 'Admissions' },
+];
+
+/* Deep-linked to the matching course filter rather than six links to the same
+   undifferentiated /courses page. */
+const PROGRAMS = [
+  { label: 'Musculoskeletal PT', to: '/courses?category=musculoskeletal' },
+  { label: 'Neurological Rehab', to: '/courses?category=neuro' },
+  { label: 'Sports Medicine', to: '/courses?category=sports' },
+  { label: 'Cardiopulmonary PT', to: '/courses?category=cardio' },
+  { label: 'Pediatric PT', to: '/courses?category=neuro' },
+  { label: 'Research Programs', to: '/faculty' },
+];
+
+const LEGAL_LINKS = [
+  { to: '/privacy', label: 'Privacy Policy' },
+  { to: '/terms', label: 'Terms of Service' },
+  { to: '/cookies', label: 'Cookie Policy' },
+];
+
+const CONTACT = [
+  { icon: 'fas fa-map-marker-alt', text: 'Dhaka, Bangladesh' },
+  { icon: 'fas fa-envelope', text: 'info@bahir.edu.bd' },
+  { icon: 'fas fa-phone-alt', text: '+880 1XXX-XXXXXX' },
+  { icon: 'fas fa-clock', text: 'Sun - Thu: 9:00 AM - 5:00 PM' },
+];
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -10,80 +43,76 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <img 
-                src="/assets/logo.png" 
-                alt="BAHIR Logo" 
-                className="footer-logo-img" 
-                onError={(e) => { e.target.style.display = 'none'; }}
+              <img
+                className="footer-logo-mark"
+                src="/assets/logo-72.png"
+                srcSet="/assets/logo-72.png 1x, /assets/logo-192.png 2x"
+                alt=""
+                width="72"
+                height="72"
+                loading="lazy"
+                decoding="async"
+                aria-hidden="true"
               />
               <div>
-                <h3 className="footer-logo-name">BAHIR</h3>
-                <p className="footer-logo-full">Health Innovation & Research</p>
+                <p className="footer-logo-name">BAHIR</p>
+                <p className="footer-logo-full">
+                  Bangladesh Academy of Health Innovation &amp; Research
+                </p>
               </div>
             </div>
-            <p className="footer-description">Advancing healthcare globally through excellence in physiotherapy education, innovative research, and clinical practice.</p>
-            <div className="footer-social">
-              <a href="#" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-              <a href="#" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-              <a href="#" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-              <a href="#" aria-label="YouTube"><i className="fab fa-youtube"></i></a>
-            </div>
+            <p className="footer-description">
+              Advancing healthcare globally through excellence in physiotherapy education,
+              innovative research, and clinical practice.
+            </p>
+            {/* Social buttons removed: no BAHIR profiles exist to link to, and
+                a control that does nothing is worse than no control. Restore as
+                <a href> once the accounts are live. */}
+            <p className="footer-cta-line">
+              <Link to="/contact" className="btn btn-outline btn-sm">
+                Get in touch <i className="fas fa-arrow-right" aria-hidden="true"></i>
+              </Link>
+            </p>
           </div>
-          
-          <div className="footer-links">
-            <h4 className="footer-title">Quick Links</h4>
+
+          <nav className="footer-links" aria-labelledby="footer-quick-links">
+            <h2 className="footer-title" id="footer-quick-links">Quick Links</h2>
             <ul>
-              <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/courses">Our Programs</Link></li>
-              <li><Link to="/faculty">Faculty</Link></li>
-              <li><Link to="/media">Events</Link></li>
-              <li><Link to="/media">News</Link></li>
-              <li><Link to="/courses">Admissions</Link></li>
+              {QUICK_LINKS.map((link) => (
+                <li key={link.label}><Link to={link.to}>{link.label}</Link></li>
+              ))}
             </ul>
-          </div>
-          
-          <div className="footer-links">
-            <h4 className="footer-title">Programs</h4>
+          </nav>
+
+          <nav className="footer-links" aria-labelledby="footer-programs">
+            <h2 className="footer-title" id="footer-programs">Programs</h2>
             <ul>
-              <li><a href="#">Musculoskeletal PT</a></li>
-              <li><a href="#">Neurological Rehab</a></li>
-              <li><a href="#">Sports Medicine</a></li>
-              <li><a href="#">Cardiopulmonary PT</a></li>
-              <li><a href="#">Pediatric PT</a></li>
-              <li><a href="#">Research Programs</a></li>
+              {PROGRAMS.map((program) => (
+                <li key={program.label}><Link to={program.to}>{program.label}</Link></li>
+              ))}
             </ul>
-          </div>
-          
+          </nav>
+
           <div className="footer-contact">
-            <h4 className="footer-title">Contact Us</h4>
+            <h2 className="footer-title">Contact Us</h2>
             <ul>
-              <li className="contact-item">
-                <i className="fas fa-map-marker-alt contact-icon"></i> 
-                <span>Dhaka, Bangladesh</span>
-              </li>
-              <li className="contact-item">
-                <i className="fas fa-envelope contact-icon"></i> 
-                <span>info@bahir.edu.bd</span>
-              </li>
-              <li className="contact-item">
-                <i className="fas fa-phone-alt contact-icon"></i> 
-                <span>+880 1XXX-XXXXXX</span>
-              </li>
-              <li className="contact-item">
-                <i className="fas fa-clock contact-icon"></i> 
-                <span>Sun - Thu: 9:00 AM - 5:00 PM</span>
-              </li>
+              {CONTACT.map((item) => (
+                <li className="contact-item" key={item.text}>
+                  <i className={`${item.icon} contact-icon`} aria-hidden="true"></i>
+                  <span>{item.text}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
-        
+
         <div className="footer-bottom">
-          <p>&copy; {currentYear} BAHIR — Bangladesh Academy of Health Innovation & Research. All rights reserved.</p>
-          <div className="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-          </div>
+          <p>&copy; {currentYear} BAHIR — Bangladesh Academy of Health Innovation &amp; Research. All rights reserved.</p>
+          <ul className="footer-bottom-links">
+            {LEGAL_LINKS.map((link) => (
+              <li key={link.to}><Link to={link.to}>{link.label}</Link></li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

@@ -1,20 +1,75 @@
 .hero {
   position: relative;
   min-height: 100vh;
+  /* svh tracks the *small* viewport, so the hero doesn't extend behind mobile
+     browser chrome the way 100vh does. 100vh above is the fallback. */
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  background-image: linear-gradient(to bottom, rgb(51 100 171 / 70%), var(--dark-navy)), url(/assets/hero_bg.jpg);
+  /* BASE SCRIM — deliberately light so the photograph stays visible.
+     It MUST NOT reference --dark-navy: the light theme redefines that token to
+     #f8fafc, and this hero pins its text to #f8fafc for the dark photo beneath,
+     so a themed stop rendered white-on-white (1.0:1) across the lower half of
+     the hero in light mode. Fixed maroon-black from the crest banner, identical
+     in both themes — and darker than the navy it replaced, so every foreground
+     gained contrast rather than losing it.
+     Text legibility is NOT this layer's job — see .hero-gradient below. */
+  /* The photograph comes from --hero-image, defined in styles/hero-image.css.
+     That indirection exists so scripts/optimise-images.py can swap in
+     responsive WebP tiers by rewriting one small file — referencing the tiers
+     directly here would 404 until the script had been run. */
+  background-image:
+    linear-gradient(180deg,
+      rgba(43, 12, 22, 0.55) 0%,
+      rgba(43, 12, 22, 0.42) 45%,
+      rgba(43, 12, 22, 0.72) 100%),
+    var(--hero-image);
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   overflow: hidden;
-  padding-top: 80px; /* Offset for navbar */
+  padding-top: var(--nav-height);
 }
 
+/* TEXT SCRIM — the layer that guarantees contrast.
+   hero_bg.jpg contains near-white regions (measured peak luminance 0.90), and
+   a combined alpha of 0.75 is the minimum that keeps every hero foreground at
+   4.5:1 over those. Composited with the base above this reaches 0.80-0.90
+   behind the copy, while the right-hand side stays sheer so the photograph
+   reads through where the floating cards sit. */
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(90deg,
+    rgba(43, 12, 22, 0.65) 0%,
+    rgba(43, 12, 22, 0.65) 42%,
+    rgba(43, 12, 22, 0) 68%);
+}
+
+/* Below 1024px the hero visual is hidden and the copy centres full-width, so
+   the scrim has to cover the whole column rather than just the left side. */
+@media (max-width: 1024px) {
+  .hero-gradient {
+    background: linear-gradient(180deg,
+      rgba(43, 12, 22, 0.62) 0%,
+      rgba(43, 12, 22, 0.68) 100%);
+  }
+}
+
+/* Parallax only on pointer-driven large screens — background-attachment: fixed
+   is either ignored or badly janky on iOS Safari. */
+@media (min-width: 1025px) {
+  .hero {
+    background-attachment: fixed;
+  }
+}
+
+/* Decorative texture — brand gold, so it sits with the maroon scrim rather
+   than dragging interface blue onto the brand surface. */
 .hero-pattern {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(201, 168, 76, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(200, 164, 92, 0.14) 1px, transparent 1px);
   background-size: 40px 40px;
   opacity: 0.5;
   z-index: 0;
@@ -37,6 +92,37 @@
   padding-top: 2rem;
 }
 
+/* The hero always sits on a darkened photograph, in both themes, so it pins
+   the light-on-dark ramp rather than inheriting the theme's. */
+.hero,
+.hero .hero-title,
+.hero .hero-description,
+.hero .hero-card-text strong {
+  color: #f8fafc;
+}
+
+.hero .hero-description,
+.hero .trust-text,
+.hero .hero-card-text span,
+.hero .hero-scroll-indicator {
+  color: #cbd5e1;
+}
+
+/* .btn-glass defaults to var(--text-primary), which is near-black in the light
+   theme — unreadable against the hero's darkened photograph. */
+.hero .btn-glass {
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.hero .btn-glass:hover {
+  border-color: var(--accent-light);
+}
+
+.hero .trust-text strong {
+  color: #7dd3fc;
+}
+
 .hero-text {
   width: 55%;
   padding-right: 2rem;
@@ -51,17 +137,47 @@
   align-items: center;
 }
 
+/* Brand furniture, and it sits directly above the gold kicker — a blue chip
+   there was the one genuinely incoherent spot in the hybrid palette. The
+   floating panel keeps its blue accents deliberately: it overlays the
+   blue/teal DNA photograph, so blue harmonises there. */
 .hero-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 1.25rem;
-  background: var(--gradient-gold);
-  border: 1px solid var(--border-color);
+  background: rgba(200, 164, 92, 0.18);
+  border: 1px solid rgba(200, 164, 92, 0.42);
   border-radius: 50px;
-  color: white;
+  color: #f0dcae;
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
+}
+
+/* The institute's full name, read before the headline. Brand gold, pinned
+   because the hero surface is dark in both themes. */
+.hero-kicker {
+  font-family: var(--font-heading);
+  font-size: clamp(0.78rem, 1.5vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e3b96a;
+  margin: 0 0 0.85rem;
+  line-height: 1.4;
+  max-width: 34ch;
+}
+
+.hero-kicker::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin-top: 0.7rem;
+  background: linear-gradient(90deg, #c8a45c, transparent);
 }
 
 .hero-title {
@@ -95,6 +211,7 @@
 .trust-avatar {
   width: 36px;
   height: 36px;
+  flex-shrink: 0;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -103,78 +220,87 @@
   font-weight: 700;
   color: white;
   margin-right: -10px;
-  border: 2px solid var(--dark-navy);
+  /* fixed, not --dark-navy: this surface is dark in both themes */
+  border: 2px solid rgba(43, 12, 22, 0.9);
 }
 
 .trust-text {
   font-size: 0.9rem;
-  color: var(--text-secondary);
   margin: 0;
 }
 
-.trust-text strong {
-  color: var(--accent-gold);
+
+
+/* ==========================================================================
+   Floating panel
+
+   Rebuilt. The previous version used three different card widths
+   (250/230/210px) at unrelated percentage coordinates, and positioned the
+   circular icons ON TOP of the cards — .float-2 {right:-5%} landed on the
+   Expert Courses edge, .float-3 {left:5%} cut the Certified corner.
+
+   Now: one card width, a single repeating down-right stagger so the eye
+   follows a line, and the icons confined to the empty wedges either side of
+   that diagonal. The geometry below is deliberately non-overlapping — see the
+   coordinate note on each group.
+   ========================================================================== */
+
+/* Softens the DNA/circuit artwork directly behind the cards so their text
+   isn't competing with the photograph. */
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 8% -4% 4% 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 45% 50%, rgba(43, 12, 22, 0.55) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .hero-card {
   position: absolute;
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
+  width: 240px;                 /* equal for all three — the varying widths
+                                   are what made the group read as scattered */
+  background: rgba(28, 12, 20, 0.78);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--brand-border);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 1.25rem 1.4rem;
   box-shadow: var(--shadow-lg);
   animation: float 6s ease-in-out infinite;
 }
 
-.hero-card-1 {
-  top: 15%;
-  right: 5%;
-  width: 250px;
-  animation-delay: 0s;
-  z-index: 3;
-}
-
-.hero-card-2 {
-  top: 45%;
-  left: 0;
-  width: 230px;
-  animation-delay: 2s;
-  border-color: rgba(13, 148, 136, 0.4); /* Teal match */
-  z-index: 2;
-}
-
-.hero-card-3 {
-  bottom: 10%;
-  right: 15%;
-  width: 210px;
-  animation-delay: 4s;
-  z-index: 1;
-}
+/* Down-right diagonal. Each card steps +21% across and +32% down, so the
+   offsets are a progression rather than three arbitrary positions. */
+.hero-card-1 { top: 4%;  left: 2%;  animation-delay: 0s;   z-index: 3; }
+.hero-card-2 { top: 36%; left: 23%; animation-delay: 2s;   z-index: 2; }
+.hero-card-3 { top: 68%; left: 44%; animation-delay: 4s;   z-index: 1; }
 
 .hero-float-element {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: var(--gradient-gold);
+  background: var(--gradient-accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  color: #0f172a;
-  box-shadow: var(--shadow-gold);
+  font-size: 1.25rem;
+  color: var(--on-accent);
+  box-shadow: var(--shadow-accent);
   animation: float 5s ease-in-out infinite alternate;
+  z-index: 4;
 }
 
-.float-1 { top: 5%; left: 25%; animation-delay: 0s; }
-.float-2 { top: 35%; right: -5%; animation-delay: 1.5s; }
-.float-3 { bottom: 20%; left: 5%; animation-delay: 3s; }
+/* Icons live in the two wedges the diagonal leaves empty: upper-right and
+   lower-left. Cards span left 2%->44% +240px, so nothing here can reach them. */
+.float-1 { top: 8%;  right: 4%; animation-delay: 0s; }
+.float-2 { top: 40%; right: 1%; animation-delay: 1.5s; }
+.float-3 { bottom: 8%; left: 3%; animation-delay: 3s; }
 
 .hero-card-icon {
   font-size: 2rem;
-  color: var(--accent-gold);
+  color: #7dd3fc;
   margin-bottom: 0.5rem;
 }
 
@@ -186,24 +312,22 @@
 .hero-card-text strong {
   font-size: 1.25rem;
   font-family: var(--font-heading);
-  color: var(--text-primary);
 }
 
 .hero-card-text span {
   font-size: 0.85rem;
-  color: var(--text-secondary);
 }
 
 .hero-scroll-indicator {
   position: absolute;
-  bottom: 2rem;
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  color: var(--text-secondary);
+  color: #cbd5e1;
   font-size: 0.875rem;
   z-index: 2;
   animation: fadeIn 2s ease-in-out;
@@ -212,7 +336,7 @@
 .scroll-mouse {
   width: 26px;
   height: 40px;
-  border: 2px solid var(--text-secondary);
+  border: 2px solid #cbd5e1;
   border-radius: 20px;
   position: relative;
 }
@@ -224,27 +348,47 @@
   transform: translateX(-50%);
   width: 4px;
   height: 8px;
-  background: var(--accent-gold);
+  background: #7dd3fc;
   border-radius: 2px;
   animation: scrollWheel 1.5s infinite;
 }
 
-@media (max-width: 1024px) {
+/* ==========================================================================
+   Responsive — breakpoints follow the project scale (480 / 768 / 1024 / 1280)
+   ========================================================================== */
+@media (max-width: 1280px) {
   .hero-text {
-    width: 50%;
+    width: 52%;
   }
-  
+
   .hero-visual {
-    width: 50%;
-    height: 500px;
+    width: 48%;
+    height: 520px;
+  }
+
+  /* One width for all three, as above — scaling them differently is what
+     produced the scattered look in the first place. */
+  .hero-card {
+    width: 212px;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .hero-float-element {
+    width: 46px;
+    height: 46px;
+    font-size: 1.1rem;
   }
 }
 
-@media (max-width: 768px) {
+/* The floating-card collage is decorative and absolutely positioned at
+   percentages — below this width the cards overlap each other and reserve
+   400-600px of dead height that pushes the CTA off-screen. It is dropped
+   entirely; the Stats section directly below carries the same three figures. */
+@media (max-width: 1024px) {
   .hero {
     align-items: flex-start;
-    padding-top: 120px;
-    padding-bottom: 80px;
+    padding-top: calc(var(--nav-height) + 3rem);
+    padding-bottom: 5rem;
   }
 
   .hero .container {
@@ -252,51 +396,73 @@
     text-align: center;
     padding-top: 0;
   }
-  
-  .hero-text {
-    width: 100%;
-    padding-right: 0;
-    margin-bottom: 3rem;
-  }
-  
-  .hero-description {
-    margin: 0 auto 2rem;
-  }
-  
-  .hero-cta {
-    justify-content: center;
-  }
-  
+
   .hero-visual {
-    width: 100%;
-    height: 450px;
-    margin-top: 2rem;
-  }
-  
-  .hero-card {
-    padding: 1rem;
-    transform: scale(0.9);
+    display: none;
   }
 
-  .hero-card-1 { top: 0; right: -5%; }
-  .hero-card-2 { top: 35%; left: -5%; }
-  .hero-card-3 { top: 70%; right: 5%; }
-  
-  .hero-float-element { transform: scale(0.7); }
-  .float-1 { top: 0; left: 10%; }
-  .float-2 { top: 40%; right: 0; }
-  .float-3 { bottom: 5%; left: 0; }
+  .hero-text {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-right: 0;
+  }
+
+  .hero-description {
+    max-width: 100%;
+    margin: 0 auto 2rem;
+  }
+
+  .hero-cta,
+  .hero-trust {
+    justify-content: center;
+  }
+
+  .hero-badge {
+    margin-inline: auto;
+  }
+
+  .hero-kicker {
+    margin-inline: auto;
+    max-width: 40ch;
+  }
+
+  .hero-kicker::after {
+    margin-inline: auto;
+    background: linear-gradient(90deg, transparent, #c8a45c, transparent);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-trust {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .trust-avatars {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding-bottom: 4rem;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: clamp(1.85rem, 8vw, 2.25rem);
   }
-  .hero-visual {
-    height: 400px;
+
+  .hero-description {
+    font-size: 1rem;
   }
-  .hero-card {
-    width: 200px !important;
-    transform: scale(0.85);
+
+  .hero-scroll-indicator {
+    display: none;
   }
 }

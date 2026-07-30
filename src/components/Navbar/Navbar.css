@@ -1,69 +1,103 @@
+/* The navbar inherits the theme's text ramp — it must NOT pin its own, or the
+   light theme keeps near-white text on a light surface. */
 .navbar {
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1rem 0;
+  min-height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
   z-index: 1000;
-  transition: all var(--transition-normal);
+  transition: background var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
   background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
   color: var(--text-primary);
 }
 
 .navbar.scrolled {
-  padding: 1rem 0;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem;
 }
 
+/* ==========================================================================
+   Logo — the institutional crest.
+
+   Rendered at 56px because the crest degrades below that: the laurel ring
+   and banner text turn to mud around 44px. The favicon uses a shield-only
+   crop for the same reason.
+   ========================================================================== */
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  background: var(--gradient-gold);
-  color: white;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  gap: 0.7rem;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
-.logo-img {
-  height: 48px;
-  width: auto;
+.logo-mark {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .logo-name {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  color: white;
-  line-height: 1;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
 }
 
 .logo-tagline {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  letter-spacing: 1px;
+  font-size: 0.66rem;
+  color: var(--brand-gold-text);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.25;
+  max-width: 30ch;
 }
 
+/* Full name >=1280px, shortened 1024-1280, neither below 1024 (the drawer
+   carries it there instead). */
+.logo-tagline-short { display: none; }
+
+@media (max-width: 1280px) {
+  .logo-tagline-full { display: none; }
+  .logo-tagline-short { display: inline; }
+}
+
+/* ==========================================================================
+   Menu
+   ========================================================================== */
 .nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.nav-links {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -84,7 +118,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--accent-gold);
+  background-color: var(--accent);
   transition: width var(--transition-normal);
 }
 
@@ -95,15 +129,47 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--accent-gold);
+  color: var(--accent-text);
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+/* ==========================================================================
+   Mobile toggle
+   ========================================================================== */
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -111,7 +177,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
   z-index: 1001;
 }
 
@@ -136,45 +202,107 @@
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-@media (max-width: 768px) {
-  .nav-menu, .nav-actions {
+/* ==========================================================================
+   Responsive
+
+   Six nav items + Apply Now + theme toggle need roughly 995px of bar. The
+   container is viewport-minus-4rem, so the drawer takes over below 1024px and
+   the 1024-1200 band runs tighter gaps to avoid an overflow at the seam.
+   ========================================================================== */
+@media (max-width: 1200px) and (min-width: 1025px) {
+  .nav-links {
+    gap: 1.25rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+
+  .nav-menu {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .nav-menu {
     display: none;
   }
-  
+
   .nav-toggle {
     display: flex;
   }
-  
+
+  /* The drawer carries the links AND the CTA. Hiding .nav-actions outright
+     used to make "Apply Now" unreachable on phones. */
   .nav-menu.active {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
+    max-height: calc(100dvh - var(--nav-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background: var(--dark-card);
-    padding: 2rem;
+    padding: 1.5rem 2rem 2rem;
     box-shadow: var(--shadow-lg);
     border-top: 1px solid var(--border-color);
   }
+
+  .nav-menu.active .nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .nav-menu.active .nav-link {
+    display: block;
+    padding: 0.85rem 0;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .nav-menu.active .nav-link::after {
+    display: none;
+  }
+
+  .nav-menu.active .nav-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .nav-menu.active .nav-actions .btn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
 }
 
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border-light);
-  color: var(--text-primary);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-fast);
+@media (max-width: 480px) {
+  .nav-menu.active {
+    padding: 1.25rem 1.5rem 1.75rem;
+  }
 }
 
-.theme-toggle:hover {
-  background: var(--accent-gold);
-  color: #111827;
-  border-color: var(--accent-gold);
+/* Below 480 the bar holds crest + wordmark + theme toggle + hamburger, and
+   the tagline has nowhere to go. The hero kicker and footer lockup carry the
+   institute name on phones; the logo link's aria-label always has it. */
+@media (max-width: 480px) {
+  .logo-tagline {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo-name {
+    font-size: 1.25rem;
+  }
+
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+  }
 }

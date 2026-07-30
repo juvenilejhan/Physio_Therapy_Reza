@@ -35,6 +35,12 @@ export default function useAnimatedCounter(target, duration = 2000) {
     const element = ref.current;
     if (!element) return;
 
+    // Reduced motion: show the final value immediately rather than tweening.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCount(target);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -51,7 +57,7 @@ export default function useAnimatedCounter(target, duration = 2000) {
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, [animate]);
+  }, [animate, target]);
 
   return { ref, count };
 }

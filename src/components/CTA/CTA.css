@@ -1,17 +1,20 @@
 .cta {
   padding: 6rem 0;
-  background: linear-gradient(135deg, var(--dark-navy) 0%, var(--primary-maroon) 50%, var(--primary-green) 100%);
+  /* Brand surface: crest maroon into laurel green, not interface blue. */
+  background: linear-gradient(135deg, #1a0810 0%, #6b1f35 55%, #2d5b3e 100%);
   position: relative;
   text-align: center;
   overflow: hidden;
   color: #ffffff;
 }
 
+/* The CTA panel is a dark gradient in both themes, so its overlay and text
+   are pinned rather than themed. */
 .cta::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(10, 15, 30, 0.8);
+  background: rgba(26, 8, 16, 0.68);
   z-index: 1;
 }
 
@@ -51,7 +54,6 @@
   font-family: var(--font-body);
   font-size: 1rem;
   backdrop-filter: blur(5px);
-  outline: none;
   transition: all var(--transition-fast);
 }
 
@@ -60,8 +62,17 @@
 }
 
 .cta-input-group input:focus {
-  border-color: var(--accent-gold);
-  background: rgba(255,255,255,0.15);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.cta-form .btn-primary {
+  background: #ffffff;
+  color: #6b1f35;
+}
+
+.cta-form .btn-primary:hover {
+  background: #f5e9d6;
 }
 
 .cta-disclaimer {
@@ -77,5 +88,65 @@
   
   .cta-title {
     font-size: 2rem;
+  }
+}
+
+/* The CTA panel is a pinned dark gradient, so status colours are pinned too —
+   the themed --error-text/--success-text would go dark-on-dark in light mode. */
+.cta-input-group input.has-error {
+  border-color: #fca5a5;
+}
+
+.cta-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: #fecaca;
+  margin: 0.75rem 0 0;
+}
+
+.cta-success {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  border-radius: 12px;
+  background: rgba(52, 211, 153, 0.14);
+  border: 1px solid #34d399;
+}
+
+.cta-success i {
+  color: #6ee7b7;
+  font-size: 1.25rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.cta-success p {
+  margin: 0;
+  color: #ecfdf5;
+  font-size: 0.925rem;
+  line-height: 1.6;
+}
+
+.cta-success a {
+  color: #a7f3d0;
+  text-decoration: underline;
+}
+
+.cta-form .btn-spinner {
+  border-color: currentColor;
+  border-top-color: transparent;
+}
+
+@media (max-width: 480px) {
+  .cta-success {
+    flex-direction: column;
+    gap: 0.6rem;
   }
 }

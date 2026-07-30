@@ -1,25 +1,21 @@
 import { stats } from '../../data/stats';
-import useScrollReveal from '../../hooks/useScrollReveal';
 import useAnimatedCounter from '../../hooks/useAnimatedCounter';
+import Reveal from '../Reveal/Reveal';
 import './Stats.css';
 
 function StatItem({ stat }) {
   const { ref, count } = useAnimatedCounter(stat.count, 2000);
-  const revealRef = useScrollReveal();
-  
+
   return (
-    <div 
-      className="stat-item reveal" 
-      ref={(el) => {
-        revealRef.current = el;
-      }}
-    >
-      <div className="stat-icon"><i className={stat.icon}></i></div>
-      <div className="stat-number" ref={ref}>
-        {count}{stat.suffix}
+    <Reveal className="stat-item">
+      <div className="stat-icon" aria-hidden="true"><i className={stat.icon}></i></div>
+      {/* The counter animates from 0, so the accessible name carries the final
+          value — assistive tech shouldn't read a number mid-tween. */}
+      <div className="stat-number" ref={ref} aria-label={`${stat.count}${stat.suffix} ${stat.label}`}>
+        <span aria-hidden="true">{count}{stat.suffix}</span>
       </div>
-      <div className="stat-label">{stat.label}</div>
-    </div>
+      <div className="stat-label" aria-hidden="true">{stat.label}</div>
+    </Reveal>
   );
 }
 
