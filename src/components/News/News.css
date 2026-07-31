@@ -1,5 +1,5 @@
 .news {
-  background: var(--dark-surface);
+  background: var(--dark-navy);
 }
 
 /* auto-FILL with a CAPPED track, and justify-content:center.
@@ -23,7 +23,7 @@
   background: var(--dark-card);
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all var(--transition-normal);
 }
 
@@ -32,8 +32,6 @@
   border-color: var(--border-color);
   box-shadow: var(--shadow-lg);
 }
-
-
 
 .news-meta {
   display: flex;
