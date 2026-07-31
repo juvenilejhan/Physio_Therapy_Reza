@@ -33,6 +33,7 @@ export const departments = [
 export const enquirySubjects = [
   { value: 'admissions', label: 'Course admissions' },
   { value: 'programs', label: 'Programme information' },
+  { value: 'support', label: 'Research & publication support' },
   { value: 'research', label: 'Research collaboration' },
   { value: 'events', label: 'Events & workshops' },
   { value: 'international', label: 'International applications' },

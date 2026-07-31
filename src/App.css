@@ -12,6 +12,13 @@ main {
   padding-top: calc(var(--nav-height) + 2rem);
 }
 
+/* The first section/article inside .page-wrapper sits directly below the
+   navbar-clearing offset above — its own top padding (meant for the gap
+   between stacked sections) would otherwise double up with it. */
+.page-wrapper > :first-child {
+  padding-top: 0;
+}
+
 @media (max-width: 768px) {
   .page-wrapper {
     padding-top: calc(var(--nav-height) + 1rem);

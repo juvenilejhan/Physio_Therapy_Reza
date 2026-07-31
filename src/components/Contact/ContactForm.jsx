@@ -4,6 +4,7 @@ import useFormSubmit, { required, email, minLength, optionalPhone } from '../../
 import FormField from '../FormField/FormField';
 import { enquirySubjects } from '../../data/contact';
 import { allPrograms } from '../../data/programs';
+import { SUPPORT_SERVICES } from '../../data/support';
 
 const INITIAL = { name: '', email: '', phone: '', subject: '', message: '' };
 
@@ -28,6 +29,12 @@ export default function ContactForm() {
     return allPrograms.find((p) => p.id === id);
   }, [searchParams]);
 
+  // Support service cards link here as /contact?subject=support&service=<id>.
+  const preselectedService = useMemo(() => {
+    const id = Number(searchParams.get('service'));
+    return SUPPORT_SERVICES.find((s) => s.id === id);
+  }, [searchParams]);
+
   // Events link here as /contact?subject=events; programme cards as ?program=<id>.
   const subjectParam = searchParams.get('subject');
   const initialValues = useMemo(() => {
@@ -38,11 +45,18 @@ export default function ContactForm() {
         message: `I'd like more information about "${preselected.name}".\n\n`,
       };
     }
+    if (preselectedService) {
+      return {
+        ...INITIAL,
+        subject: 'support',
+        message: `I'd like to enquire about "${preselectedService.title}".\n\n`,
+      };
+    }
     if (enquirySubjects.some((s) => s.value === subjectParam)) {
       return { ...INITIAL, subject: subjectParam };
     }
     return INITIAL;
-  }, [preselected, subjectParam]);
+  }, [preselected, preselectedService, subjectParam]);
 
   const submit = useCallback(async () => {
     // No backend exists. The delay makes the submitting state observable; the

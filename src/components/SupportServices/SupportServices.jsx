@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import Reveal from '../Reveal/Reveal';
 import { SUPPORT_SERVICES } from '../../data/support';
+import { gradientCycle } from '../../data/gradients';
 import './SupportServices.css';
 
 export default function SupportServices() {
@@ -16,12 +18,23 @@ export default function SupportServices() {
 
         <div className="support-grid">
           {SUPPORT_SERVICES.map((service, index) => (
-            <Reveal key={service.title} className="support-card" delay={index}>
-              <div className="support-icon" aria-hidden="true">
+            <Reveal as="article" key={service.id} className="support-card" delay={index % 4}>
+              <div
+                className="support-icon"
+                style={{ background: gradientCycle[index % gradientCycle.length] }}
+                aria-hidden="true"
+              >
                 <i className={service.icon}></i>
               </div>
               <h3 className="support-title">{service.title}</h3>
-              <p>{service.body}</p>
+              <p className="support-body">{service.body}</p>
+              <Link
+                to={`/contact?subject=support&service=${service.id}`}
+                className="support-cta"
+                aria-label={`Enquire about ${service.title}`}
+              >
+                Enquire Now <i className="fas fa-arrow-right" aria-hidden="true"></i>
+              </Link>
             </Reveal>
           ))}
         </div>
