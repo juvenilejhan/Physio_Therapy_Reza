@@ -346,7 +346,7 @@ section {
    ========================================================================== */
 @media (max-width: 1024px) {
   :root {
-    --section-padding: 4rem 0;
+    --section-padding: 2rem 0;
   }
 }
 
