@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { to: "/courses", label: "Programs" },
   { to: "/faculty", label: "Faculty" },
   { to: "/media", label: "Media & Events" },
+  { to: "/support", label: "Others Support" },
   { to: "/contact", label: "Contact" },
 ];
 

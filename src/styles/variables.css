@@ -6,36 +6,39 @@
    ========================================================================== */
 
 :root {
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Surfaces (dark default — Deep Navy & Slate)
      ------------------------------------------------------------------ */
-  --dark-navy: #0a192f;
-  --dark-surface: #112240;
-  --dark-card: #233554;
-  --dark-card-hover: #2d4266;
+   --dark-navy: #0a192f;
+   --dark-surface: #112240;
+   --dark-card: #233554;
+   --dark-card-hover: #2d4266;
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Brand
      ------------------------------------------------------------------ */
-  --primary: #0284c7;        /* Ocean Blue   */
-  --primary-dark: #075985;
-  --secondary: #0d9488;      /* Clinical Teal */
-  --secondary-dark: #115e59;
+   --primary: #0284c7;
+   /* Ocean Blue   */
+   --primary-dark: #075985;
+   --secondary: #0d9488;
+   /* Clinical Teal */
+   --secondary-dark: #115e59;
 
-  --accent: #38bdf8;         /* Sky — decorative fills, borders, icons */
-  --accent-light: #7dd3fc;
-  --accent-dark: #0369a1;
+   --accent: #38bdf8;
+   /* Sky — decorative fills, borders, icons */
+   --accent-light: #7dd3fc;
+   --accent-dark: #0369a1;
 
-  /* Accent reserved for TEXT. Decorative --accent (#38bdf8) only reaches
+   /* Accent reserved for TEXT. Decorative --accent (#38bdf8) only reaches
      ~3.0:1 on white, so small text uses this instead. Both sides clear 4.5:1
      against their own surface. See --accent-text override in the light block. */
-  --accent-text: #7dd3fc;
+   --accent-text: #7dd3fc;
 
-  /* Ink laid ON an accent/primary fill. Never white — white on --accent-light
+   /* Ink laid ON an accent/primary fill. Never white — white on --accent-light
      is ~1.7:1. This value is >= 8:1 on every accent stop. */
-  --on-accent: #052e45;
+   --on-accent: #052e45;
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      BRAND LAYER — drawn from the institutional crest.
 
      Two palettes coexist on purpose, and the split is load-bearing:
@@ -56,92 +59,96 @@
      card, gold 2.35:1 on white. The -text variants below are derived per
      theme and all clear 4.5:1.
      ------------------------------------------------------------------ */
-  --brand-maroon: #6b1f35;
-  --brand-maroon-deep: #2b0c16;
-  --brand-gold: #c8a45c;
-  --brand-green: #2d5b3e;
+   --brand-maroon: #6b1f35;
+   --brand-maroon-deep: #2b0c16;
+   --brand-gold: #c8a45c;
+   --brand-green: #2d5b3e;
 
-  --brand-gold-text: #e3b96a;     /* 6.68:1 on --dark-card */
-  --brand-maroon-text: #e8a0b4;   /* 5.92:1 */
-  --brand-green-text: #7fcfa0;    /* 6.63:1 */
+   --brand-gold-text: #e3b96a;
+   /* 6.68:1 on --dark-card */
+   --brand-maroon-text: #e8a0b4;
+   /* 5.92:1 */
+   --brand-green-text: #7fcfa0;
+   /* 6.63:1 */
 
-  --brand-wash: rgba(200, 164, 92, 0.12);
-  --brand-border: rgba(200, 164, 92, 0.32);
+   --brand-wash: rgba(200, 164, 92, 0.12);
+   --brand-border: rgba(200, 164, 92, 0.32);
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Text
      ------------------------------------------------------------------ */
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+   --text-primary: #f8fafc;
+   --text-secondary: #cbd5e1;
+   --text-muted: #94a3b8;
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Borders & translucent surfaces
      ------------------------------------------------------------------ */
-  --border-light: rgba(255, 255, 255, 0.1);
-  --border-color: rgba(56, 189, 248, 0.3);
+   --border-light: rgba(255, 255, 255, 0.1);
+   --border-color: rgba(56, 189, 248, 0.3);
 
-  /* Frosted surfaces — derived from the active surface, not a fixed hue,
+   /* Frosted surfaces — derived from the active surface, not a fixed hue,
      so the navbar and hero cards read correctly in both themes. */
-  --glass-bg: rgba(17, 34, 64, 0.72);
-  --glass-border: rgba(56, 189, 248, 0.18);
+   --glass-bg: rgba(17, 34, 64, 0.72);
+   --glass-border: rgba(56, 189, 248, 0.18);
 
-  /* Tint washes (section tags, pills, date chips) */
-  --accent-wash: rgba(56, 189, 248, 0.1);
-  --accent-wash-strong: rgba(56, 189, 248, 0.16);
+   /* Tint washes (section tags, pills, date chips) */
+   --accent-wash: rgba(56, 189, 248, 0.1);
+   --accent-wash-strong: rgba(56, 189, 248, 0.16);
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Status — form validation, alerts.
      Text values are chosen to clear 4.5:1 on --dark-card in each theme;
      borders clear 3:1 as non-text indicators. Never signalled by colour
      alone — every use pairs with an icon and a message.
      ------------------------------------------------------------------ */
-  --error-text: #fca5a5;
-  --error-border: #f87171;
-  --error-wash: rgba(248, 113, 113, 0.14);
+   --error-text: #fca5a5;
+   --error-border: #f87171;
+   --error-wash: rgba(248, 113, 113, 0.14);
 
-  --success-text: #6ee7b7;
-  --success-border: #34d399;
-  --success-wash: rgba(52, 211, 153, 0.14);
+   --success-text: #6ee7b7;
+   --success-border: #34d399;
+   --success-wash: rgba(52, 211, 153, 0.14);
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Gradients
      ------------------------------------------------------------------ */
-  --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-light));
-  --gradient-primary: linear-gradient(135deg, var(--primary), var(--dark-navy));
-  --gradient-brand: linear-gradient(135deg, var(--primary), var(--secondary));
-  --gradient-heading: linear-gradient(90deg, #7dd3fc, #38bdf8, #0ea5e9);
+   --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-light));
+   --gradient-primary: linear-gradient(135deg, var(--primary), var(--dark-navy));
+   --gradient-brand: linear-gradient(135deg, var(--primary), var(--secondary));
+   --gradient-heading: linear-gradient(90deg, #7dd3fc, #38bdf8, #0ea5e9);
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Typography
      ------------------------------------------------------------------ */
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+   --font-heading: 'Poppins', sans-serif;
+   --font-body: 'Inter', sans-serif;
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Depth
      ------------------------------------------------------------------ */
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-  --shadow-accent: 0 0 20px rgba(56, 189, 248, 0.25);
-  --shadow-accent-strong: 0 0 30px rgba(56, 189, 248, 0.45);
+   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+   --shadow-accent: 0 0 20px rgba(56, 189, 248, 0.25);
+   --shadow-accent-strong: 0 0 30px rgba(56, 189, 248, 0.45);
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Motion
      ------------------------------------------------------------------ */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+   --transition-fast: 0.2s ease;
+   --transition-normal: 0.3s ease;
+   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Layout
      ------------------------------------------------------------------ */
-  --container-max: 1280px;
-  --section-padding: 6rem 0;
-  --nav-height: 88px;         /* fixed navbar; page-wrapper + hero offset from this */
+   --container-max: 1280px;
+   --section-padding: 6rem 0;
+   --nav-height: 88px;
+   /* fixed navbar; page-wrapper + hero offset from this */
 
-  /* ------------------------------------------------------------------
+   /* ------------------------------------------------------------------
      Breakpoint scale — reference only. Custom properties can't be used
      in media query conditions, so these are written out literally, but
      NOTHING should introduce a value outside this set:
@@ -156,70 +163,73 @@
      800/850/900/992/1024/1025), so the nav collapsed at 900 while Stats
      reflowed at 992 and everything else at 768.
      ------------------------------------------------------------------ */
-  --focus-ring: 2px solid var(--accent);
-  --focus-offset: 2px;
+   --focus-ring: 2px solid var(--accent);
+   --focus-offset: 2px;
 }
 
 /* ==========================================================================
    Light theme
    ========================================================================== */
 :root[data-theme="light"] {
-  --dark-navy: #f8fafc;
-  --dark-surface: #f1f5f9;
-  --dark-card: #ffffff;
-  --dark-card-hover: #f1f5f9;
+   --dark-navy: #f8fafc;
+   --dark-surface: #f1f5f9;
+   --dark-card: #ffffff;
+   --dark-card-hover: #f1f5f9;
 
-  /* Darker brand stops so fills stay legible against light surfaces */
-  --primary: #0369a1;
-  --primary-dark: #075985;
-  --secondary: #0f766e;
-  --secondary-dark: #115e59;
+   /* Darker brand stops so fills stay legible against light surfaces */
+   --primary: #0369a1;
+   --primary-dark: #075985;
+   --secondary: #0f766e;
+   --secondary-dark: #115e59;
 
-  --accent: #0284c7;
-  --accent-light: #0ea5e9;
-  --accent-dark: #075985;
+   --accent: #0284c7;
+   --accent-light: #0ea5e9;
+   --accent-dark: #075985;
 
-  /* 4.6:1 on #ffffff — passes AA for small text where #0284c7 (3.9:1) does not */
-  --accent-text: #0369a1;
-  --on-accent: #ffffff;
+   /* 4.6:1 on #ffffff — passes AA for small text where #0284c7 (3.9:1) does not */
+   --accent-text: #0369a1;
+   --on-accent: #ffffff;
 
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+   --text-primary: #0f172a;
+   --text-secondary: #334155;
+   --text-muted: #64748b;
 
-  --border-light: rgba(0, 0, 0, 0.1);
-  --border-color: rgba(2, 132, 199, 0.4);
+   --border-light: rgba(0, 0, 0, 0.1);
+   --border-color: rgba(2, 132, 199, 0.4);
 
-  --glass-bg: rgba(255, 255, 255, 0.78);
-  --glass-border: rgba(2, 132, 199, 0.18);
+   --glass-bg: rgba(255, 255, 255, 0.78);
+   --glass-border: rgba(2, 132, 199, 0.18);
 
-  --accent-wash: rgba(2, 132, 199, 0.08);
-  --accent-wash-strong: rgba(2, 132, 199, 0.14);
+   --accent-wash: rgba(2, 132, 199, 0.08);
+   --accent-wash-strong: rgba(2, 132, 199, 0.14);
 
-  /* Brand text variants invert for the light theme — the dark-theme values
+   /* Brand text variants invert for the light theme — the dark-theme values
      are pale tints that vanish on white. */
-  --brand-gold-text: #8a6a22;     /* 5.04:1 on #ffffff */
-  --brand-maroon-text: #8c2545;   /* 8.52:1 */
-  --brand-green-text: #1f5136;    /* 9.18:1 */
+   --brand-gold-text: #8a6a22;
+   /* 5.04:1 on #ffffff */
+   --brand-maroon-text: #8c2545;
+   /* 8.52:1 */
+   --brand-green-text: #1f5136;
+   /* 9.18:1 */
 
-  --brand-wash: rgba(107, 31, 53, 0.07);
-  --brand-border: rgba(107, 31, 53, 0.22);
+   --brand-wash: rgba(107, 31, 53, 0.07);
+   --brand-border: rgba(107, 31, 53, 0.22);
 
-  /* Dark-theme status colours are far too pale on white — darkened here. */
-  --error-text: #b91c1c;
-  --error-border: #dc2626;
-  --error-wash: rgba(220, 38, 38, 0.08);
+   /* Dark-theme status colours are far too pale on white — darkened here. */
+   --error-text: #b91c1c;
+   --error-border: #dc2626;
+   --error-wash: rgba(220, 38, 38, 0.08);
 
-  --success-text: #047857;
-  --success-border: #059669;
-  --success-wash: rgba(5, 150, 105, 0.08);
+   --success-text: #047857;
+   --success-border: #059669;
+   --success-wash: rgba(5, 150, 105, 0.08);
 
-  --gradient-heading: linear-gradient(90deg, #0369a1, #0284c7, #0e7490);
+   --gradient-heading: linear-gradient(90deg, #0369a1, #0284c7, #0e7490);
 
-  /* Softer shadows — the heavy dark-mode stack reads as dirt on white */
-  --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
-  --shadow-accent: 0 0 20px rgba(2, 132, 199, 0.2);
-  --shadow-accent-strong: 0 0 30px rgba(2, 132, 199, 0.35);
+   /* Softer shadows — the heavy dark-mode stack reads as dirt on white */
+   --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+   --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.06);
+   --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
+   --shadow-accent: 0 0 20px rgba(2, 132, 199, 0.2);
+   --shadow-accent-strong: 0 0 30px rgba(2, 132, 199, 0.35);
 }

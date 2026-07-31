@@ -20,6 +20,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const CoursesPage = lazy(() => import('./pages/CoursesPage'));
 const FacultyPage = lazy(() => import('./pages/FacultyPage'));
 const MediaPage = lazy(() => import('./pages/MediaPage'));
+const SupportPage = lazy(() => import('./pages/SupportPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
@@ -51,6 +52,7 @@ function App() {
               <Route path="/courses" element={<CoursesPage />} />
               <Route path="/faculty" element={<FacultyPage />} />
               <Route path="/media" element={<MediaPage />} />
+              <Route path="/support" element={<SupportPage />} />
               <Route path="/contact" element={<ContactPage />} />
 
               <Route path="/privacy" element={<LegalPage slug="privacy" />} />
