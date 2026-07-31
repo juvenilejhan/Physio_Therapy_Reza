@@ -1,16 +1,16 @@
 import usePageMeta from '../hooks/usePageMeta';
-import Courses from '../components/Courses/Courses';
+import Programs from '../components/Programs/Programs';
 import AdmissionSteps from '../components/AdmissionSteps/AdmissionSteps';
 
 export default function CoursesPage() {
   usePageMeta(
-    'Programmes & Courses',
-    'Evidence-based physiotherapy courses: musculoskeletal, neurological, sports medicine and cardiopulmonary programmes, plus how to apply.'
+    'Academic Programmes',
+    'BAHIR academic programmes: Certificate, Postgraduate, Fellowship and Research pathways in physiotherapy and allied health sciences.'
   );
 
   return (
     <div className="page-wrapper">
-      <Courses titleAs="h1" />
+      <Programs />
       <AdmissionSteps />
     </div>
   );

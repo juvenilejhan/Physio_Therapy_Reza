@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import useFormSubmit, { required, email, minLength, optionalPhone } from '../../hooks/useFormSubmit';
 import FormField from '../FormField/FormField';
 import { enquirySubjects } from '../../data/contact';
-import { courses } from '../../data/courses';
+import { allPrograms } from '../../data/programs';
 
 const INITIAL = { name: '', email: '', phone: '', subject: '', message: '' };
 
@@ -21,21 +21,21 @@ function validate(values) {
 export default function ContactForm() {
   const [searchParams] = useSearchParams();
 
-  // Course cards link here as /contact?course=<id> so the enquiry arrives with
-  // context instead of dumping the user on an empty form.
+  // Programme cards link here as /contact?program=<id> so the enquiry arrives
+  // with context instead of dumping the user on an empty form.
   const preselected = useMemo(() => {
-    const id = Number(searchParams.get('course'));
-    return courses.find((c) => c.id === id);
+    const id = Number(searchParams.get('program'));
+    return allPrograms.find((p) => p.id === id);
   }, [searchParams]);
 
-  // Events link here as /contact?subject=events; course cards as ?course=<id>.
+  // Events link here as /contact?subject=events; programme cards as ?program=<id>.
   const subjectParam = searchParams.get('subject');
   const initialValues = useMemo(() => {
     if (preselected) {
       return {
         ...INITIAL,
         subject: 'admissions',
-        message: `I'd like more information about "${preselected.title}".\n\n`,
+        message: `I'd like more information about "${preselected.name}".\n\n`,
       };
     }
     if (enquirySubjects.some((s) => s.value === subjectParam)) {

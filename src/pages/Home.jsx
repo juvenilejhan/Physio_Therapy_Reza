@@ -1,7 +1,7 @@
 import usePageMeta from '../hooks/usePageMeta';
 import Hero from '../components/Hero/Hero';
 import Stats from '../components/Stats/Stats';
-import Courses from '../components/Courses/Courses';
+import ProgramsTeaser from '../components/Programs/ProgramsTeaser';
 import CTA from '../components/CTA/CTA';
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Hero />
       <Stats />
-      <Courses />
+      <ProgramsTeaser />
       <CTA />
     </>
   );

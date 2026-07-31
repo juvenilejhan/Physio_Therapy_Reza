@@ -30,7 +30,7 @@ export default function ContactPage() {
             {/* Remounts when the deep-link params change so the prefilled
                 subject and message refresh rather than keeping stale state. */}
             <ContactForm
-              key={`${searchParams.get('course') ?? ''}-${searchParams.get('subject') ?? ''}`}
+              key={`${searchParams.get('program') ?? ''}-${searchParams.get('subject') ?? ''}`}
             />
 
             <aside className="contact-aside">

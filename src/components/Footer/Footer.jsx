@@ -10,15 +10,14 @@ const QUICK_LINKS = [
   { to: '/contact', label: 'Admissions' },
 ];
 
-/* Deep-linked to the matching course filter rather than six links to the same
-   undifferentiated /courses page. */
+/* One link per real academic pathway, deep-linking to its filter on /courses
+   — replaces a set of links against a fictional course catalogue that no
+   longer exists (and one that pointed at /faculty by mistake). */
 const PROGRAMS = [
-  { label: 'Musculoskeletal PT', to: '/courses?category=musculoskeletal' },
-  { label: 'Neurological Rehab', to: '/courses?category=neuro' },
-  { label: 'Sports Medicine', to: '/courses?category=sports' },
-  { label: 'Cardiopulmonary PT', to: '/courses?category=cardio' },
-  { label: 'Pediatric PT', to: '/courses?category=neuro' },
-  { label: 'Research Programs', to: '/faculty' },
+  { label: 'Certificate Programmes', to: '/courses?tier=certificate' },
+  { label: 'Postgraduate Programmes', to: '/courses?tier=postgraduate' },
+  { label: 'Fellowship Programmes', to: '/courses?tier=fellowship' },
+  { label: 'Research Programmes', to: '/courses?tier=research' },
 ];
 
 const LEGAL_LINKS = [

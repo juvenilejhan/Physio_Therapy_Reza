@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gradients } from '../../data/gradients';
+import { allPrograms } from '../../data/programs';
 import './Hero.css';
 
 const PARTICLE_COUNT = 30;
@@ -75,7 +76,7 @@ export default function Hero() {
           <div className="hero-cta animate-fade-up delay-3">
             <Link to="/courses" className="btn btn-primary btn-lg">
               <i className="fas fa-book-open" aria-hidden="true"></i>
-              Explore Courses
+              Explore Programmes
             </Link>
             <Link to="/about" className="btn btn-glass btn-lg">
               <i className="fas fa-play-circle" aria-hidden="true"></i>
@@ -98,8 +99,8 @@ export default function Hero() {
           <div className="hero-card hero-card-1">
             <div className="hero-card-icon"><i className="fas fa-graduation-cap" aria-hidden="true"></i></div>
             <div className="hero-card-text">
-              <strong>25+</strong>
-              <span>Expert Courses</span>
+              <strong>{allPrograms.length}+</strong>
+              <span>Academic Programmes</span>
             </div>
           </div>
           <div className="hero-card hero-card-2">
