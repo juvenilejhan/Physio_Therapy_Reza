@@ -76,6 +76,12 @@
     flex-direction: column;
   }
 
+  /* In a column flex container, the 240px flex-basis set above applies to
+     height, not width — left as-is it stretches the field to 240px tall. */
+  .newsletter-field {
+    flex-basis: auto;
+  }
+
   .newsletter-form .btn {
     width: 100%;
     align-self: stretch;

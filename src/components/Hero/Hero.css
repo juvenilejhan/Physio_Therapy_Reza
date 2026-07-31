@@ -260,21 +260,45 @@
   position: absolute;
   width: 240px;                 /* equal for all three — the varying widths
                                    are what made the group read as scattered */
-  background: rgba(28, 12, 20, 0.78);
+  /* Background is per-card below (each a different crest hue) — glass
+     material, not flat charcoal. Border, shadow and the highlight are fixed
+     values rather than --brand-border / --shadow-lg: this card sits on the
+     same dark photo in both themes, and the light-theme versions of those
+     tokens are tuned for pale surfaces (see the scrim comment above this
+     rule for the same class of bug). */
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--brand-border);
+  border: 1px solid rgba(200, 164, 92, 0.3);
   border-radius: 16px;
   padding: 1.25rem 1.4rem;
-  box-shadow: var(--shadow-lg);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 20px 25px -5px rgba(0, 0, 0, 0.5),
+    0 8px 10px -6px rgba(0, 0, 0, 0.35);
   animation: float 6s ease-in-out infinite;
 }
 
 /* Down-right diagonal. Each card steps +21% across and +32% down, so the
-   offsets are a progression rather than three arbitrary positions. */
-.hero-card-1 { top: 4%;  left: 2%;  animation-delay: 0s;   z-index: 3; }
-.hero-card-2 { top: 36%; left: 23%; animation-delay: 2s;   z-index: 2; }
-.hero-card-3 { top: 68%; left: 44%; animation-delay: 4s;   z-index: 1; }
+   offsets are a progression rather than three arbitrary positions.
+   Each card's gradient reuses the exact stops from gradients.js (maroon /
+   laurel / bronze) at reduced opacity for the glass effect, rather than
+   inventing new hues — same brand palette used for programme/service cards
+   elsewhere, just given room to breathe over the photograph. Alpha is
+   higher than a purely decorative tint would need: verified against the
+   hero's near-white photo highlights so text inside still clears 4.5:1
+   regardless of which card sits over which part of the photo. */
+.hero-card-1 {
+  top: 4%;  left: 2%;  animation-delay: 0s;   z-index: 3;
+  background: linear-gradient(155deg, rgba(107, 31, 53, 0.88) 0%, rgba(20, 8, 14, 0.96) 100%);
+}
+.hero-card-2 {
+  top: 36%; left: 23%; animation-delay: 2s;   z-index: 2;
+  background: linear-gradient(155deg, rgba(45, 91, 62, 0.88) 0%, rgba(23, 55, 42, 0.96) 100%);
+}
+.hero-card-3 {
+  top: 68%; left: 44%; animation-delay: 4s;   z-index: 1;
+  background: linear-gradient(155deg, rgba(138, 90, 43, 0.88) 0%, rgba(74, 45, 22, 0.96) 100%);
+}
 
 .hero-float-element {
   position: absolute;

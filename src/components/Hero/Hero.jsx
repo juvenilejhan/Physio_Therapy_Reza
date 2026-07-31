@@ -7,10 +7,10 @@ import './Hero.css';
 const PARTICLE_COUNT = 30;
 
 const TRUST_AVATARS = [
-  { initial: 'A', background: gradients.ocean },
-  { initial: 'B', background: gradients.teal },
-  { initial: 'C', background: gradients.aqua },
-  { initial: 'D', background: gradients.midnight },
+  { initial: 'A', background: gradients.maroon },
+  { initial: 'B', background: gradients.laurel },
+  { initial: 'C', background: gradients.bronze },
+  { initial: 'D', background: gradients.claret },
 ];
 
 export default function Hero() {
